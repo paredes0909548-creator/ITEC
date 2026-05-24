@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuisine Explorer | Cookbook</title>
+  <link rel="stylesheet" href="index.css"></link>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Cinzel+Decorative:wght@400;700;900&family=Didact+Gothic&family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=Special+Elite&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <nav>
+  <div class="logo">
+    <img src="picturesfolder/svgviewer-output (5)-cropped.svg">
+    <h2>CUISINE EXPLORER</h2>
+  </div>
+
+  <div class="link-searchbar-container">
+    <div class="search-bar">
+          <input type="text" placeholder="Search recipes...">
+        <select id="filter">
+          <option value="All">All Regions</option>
+        </select>
+    </div>
+      <ul>
+        <li><a href="profilePic" class="profilePic"></a></li>
+        <li onclick="showSidebar()"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#e3e3e3"><path d="M160-269.23v-40h640v40H160ZM160-460v-40h640v40H160Zm0-190.77v-40h640v40H160Z"/></svg></a></li>
+      </ul>
+    </div>
+    <div class="side-bar">
+      <ul>
+        <li onclick="closeSidebar()"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M256-227.69 227.69-256l224-224-224-224L256-732.31l224 224 224-224L732.31-704l-224 224 224 224L704-227.69l-224-224-224 224Z"/></svg></a></li>
+        <li><a href="about_us.html">About Us</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="fyp.html">For you page</a></li>
+        <li><a href="#" id="recipe_creationbtn">Create a recipe</a></li>
+        <li><a href="share_recipe.html">share your recipe</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+
+  <div class="hero">
+    <h1>Different Types of <br> Cuisines & Recipes</h1>
+    <p>Discover famous dishes, traditional flavors, and authentic cooking methods from around the world.</p>
+  </div>
+  
+  <div class="recipe_creation" id="recipe_creation">
+    <h3>Create your own recipe</h3>
+
+      <input type="text"></input>
+      <input type="text"></input>
+      <input type="text"></input>
+      <button type="submit"></button>
+
+    <a href="#" class="btn-view" id="close_recipe_creationbtn">Close</a>
+  </div>
+</header>
+  
+<div class="container">
+    <section class="food-section">
+      <div class="food-card">
+        <img src="https://t3.ftcdn.net/jpg/02/55/53/44/360_F_255534476_n8JzjZtzOFW5g3TXTLMd6QGVnToi6hqj.jpg" alt="Italian Pasta">
+        <div class="food-info">
+          <h2>Top 10 Italian Cuisine</h2>
+          <p>Explore authentic pasta, rustic pizza, rich lasagna, creamy risotto, and other iconic culinary masterpieces from Italy.</p>
+          <a href="italian.html" class="btn-view">View Recipes</a>
+        </div>
+      </div>
+
+      <div class="food-card">
+        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Mexican Tacos">
+        <div class="food-info">
+          <h2>Top 10 Mexican Cuisine</h2>
+          <p>Discover vibrant street tacos, hearty burritos, spicy enchiladas, and the traditional flavors of central America.</p>
+          <a href="mexican.html" class="btn-view">View Recipes</a>
+        </div>
+      </div>
+
+
+      <div class="food-card">
+        <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3VzaGl8ZW58MHx8MHx8fDA%3D" alt="Japanese Sushi">
+        <div class="food-info">
+          <h2>Top 10 Japanese Cuisine</h2>
+          <p>Experience delicate sushi, comforting ramen bowls, crispy tempura, and the masterful art of umami.</p>
+          <a href="japanese.html" class="btn-view">View Recipes</a>
+        </div>
+      </div>
+
+            <div class="food-card">
+        <img src="picturesfolder/kare-kare_4931.jpg" alt="philippine">
+        <div class="food-info">
+          <h2>Top 10 Philippine</h2>
+          <p>Experience delicate sushi, comforting ramen bowls, crispy tempura, and the masterful art of umami.</p>
+          <a href="philippine.html" class="btn-view">View Recipes</a>
+        </div>
+      </div>
+
+      <div class="more">
+        <h3>More cuisines curating in our kitchen...</h3>
+      </div>
+    </section>
+
+</div>
+<footer>
+      <p>Connect With Us</p>
+      <div class="socials">
+        <a href="https://twitter.com" target="_blank" aria-label="Twitter">𝕏</a>
+        <a href="https://youtube.com" target="_blank" aria-label="YouTube">▶</a>
+        <a href="https://facebook.com" target="_blank" aria-label="Facebook">ⓕ</a>
+      </div>
+      
+      <div class="footer-links">
+        <a href="privacy_policy.html">Privacy Policy</a> | 
+        <a href="visitor_agreement.html">Visitor Agreement</a>
+      </div>
+      <br>
+      <hr>
+      <p>&copy; 2026 Cuisine Explorer. All rights reserved.</p>
+</footer>
+
+
+<script src="index.js"></script>
+</body>
+
+</html>

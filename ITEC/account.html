@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register - Orange Theme</title>
+    <link rel="stylesheet" href="intro.css">
+
+</head>
+<body>
+
+<div class="container">
+    
+
+    <div class="form-box active" id="loginForm">
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Please enter your details to sign in.</p>
+
+        <form id="jsLoginForm">
+
+
+            <div class="input-group">
+                <label for="login-username">Username</label>
+                <input type="text" id="login-username" placeholder="Enter your username" required>
+            </div>
+
+
+            <div class="input-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="••••••••" required>
+            </div>
+
+            
+            <a href="#" class="forgot-pass">Forgot password?</a>
+            <button type="submit" class="btn" >Log in</button>
+        </form>
+
+        <p class="switch-text">
+            Don't have an account? <a href="#" id="toRegister">Sign up</a>
+            <a href="indexfolder/index.html">Guestmode</a>
+        </p>
+    
+
+
+    </div>
+
+
+
+    <div class="form-box" id="registerForm">
+        <h2>Create Account</h2>
+        <p class="subtitle">Get started with your free account today.</p>
+        <form id="jsRegisterForm">
+
+
+            <div class="input-group">
+                <label for="reg-username">Username</label>
+                <input type="text" id="reg-username" placeholder="Choose a username" required>
+            </div>
+
+
+            <div class="input-group">
+                <label for="reg-password">Password</label>
+                <input type="password" id="reg-password" placeholder="Create a password" required>
+            </div>
+
+
+            <div class="input-group">
+                <label for="reg-confirm">Confirm Password</label>
+                <input type="password" id="reg-confirm" placeholder="Repeat your password" required>
+            </div>
+
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+
+
+        <p class="switch-text">
+            Already have an account? <a href="#" id="toLogin">Log in</a>
+        </p>
+    </div>
+</div>
+<script src="account.js" ></script>
+
+</body>
+</html>

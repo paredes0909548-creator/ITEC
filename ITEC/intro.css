@@ -1,0 +1,376 @@
+/* THIS IS FOR INTRO*/
+:root {
+  --bg-color: #f5ecd7;
+  --text-main: #333333;
+  --text-light: #666666;
+  --accent: rgb(230, 81, 0);
+  --accent-hover: rgb(255, 112, 67);
+  --card-bg: #ffffff;
+  --border-radius: 12px;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+*{
+    padding: 0%;
+    margin: 0%;
+}
+body{
+background:linear-gradient(to top, rgba(0,0,0,0.3)50%,rgba(0,0,0,0.3)50%),url(indexfolder/picturesfolder/background_pic.jpg);
+background-size: cover;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+#termsAndAgreementForm{
+    margin: 0;
+    border-radius: 0;
+    height: 600px;
+    overflow-y:scroll;
+    scroll-behavior: smooth;
+
+}
+#logoAndbtn{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    animation: appear 2s;
+}
+#logoAndbtn h1{
+    display: flex;
+    font-family: "Aboreto", system-ui;
+    font-weight: 500;
+    font-style:normal;
+    font-size:400%;
+    text-shadow: 3px 3px 10px hsl(0, 0%, 100%);
+}
+img{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    box-shadow: 3px 3px 10px hsl(0, 0%, 0%);
+}
+button{
+    height: 30px;width: 150px;
+    font-size:medium;
+    padding: 10px;
+    background-color: hsl(21, 100%, 45%);;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.1s linear;
+    animation: appear ease-in 5s;
+    
+}
+button:hover{
+    background-color: hsl(0, 0%, 90%);
+    box-shadow: 2px 2px 3px hsl(0, 0%, 90%);
+}
+@keyframes appear {
+  0% {  opacity: 0; }
+  100% { opacity: 1; }
+}
+/*THIS IS FOR ACCOUNT REGISTRATION AND LOGIN*/
+.container{
+    position: absolute;
+}
+.form-box {
+    display: none;
+    background-color: var(--bg-color);
+    border: solid var(--accent);
+    border-radius: 16px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
+    position: relative;
+    overflow: hidden;
+    width: 400px;
+    max-width: 95%;
+    padding: 2.5rem;
+}
+
+.form-box.active ,.container {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+h2 {
+    margin-bottom: 0.5rem;
+    color: #222;
+    font-size: 1.8rem;
+}
+p.subtitle {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+.input-group {
+    margin-bottom: 1.25rem;
+}
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #444;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.input-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+.input-group input:focus {
+    outline: none;
+    border-color: #fc6011;
+    box-shadow: 0 0 0 3px rgba(252, 96, 17, 0.15);
+}
+.forgot-pass {
+    display: block;
+    text-align: right;
+    font-size: 0.8rem;
+    color: #fc6011;
+    text-decoration: none;
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+}
+.forgot-pass:hover {
+    text-decoration: underline;
+}
+.btn {
+    text-decoration: none;
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(to right, #ff9944, #fc6011);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s ease, opacity 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn:hover {
+    opacity: 0.95;
+}
+.btn:active {
+    transform: scale(0.98);
+}
+.switch-text {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+.switch-text a {
+    color: #fc6011;
+    text-decoration: none;
+    font-weight: 600;
+}
+.switch-text a:hover {
+    text-decoration: underline;
+}
+
+
+/*FOR CEllPHONE (UI)*/
+
+@media(max-width:500px){
+:root {
+--bg-color: #f5ecd7;
+--text-main: #333333;
+--text-light: #666666;
+--accent: rgb(230, 81, 0);
+--accent-hover: rgb(255, 112, 67);
+--card-bg: #ffffff;
+--border-radius: 12px;
+--shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+*{
+    padding: 0%;
+    margin: 0%;
+}
+body{
+background:linear-gradient(to top, rgba(0,0,0,0.3)50%,rgba(0,0,0,0.3)50%),url(indexfolder/picturesfolder/background_pic.jpg);
+background-size: cover;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+#termsAndAgreementForm{
+    margin: 0;
+    border-radius: 0;
+    height: 600px;
+    overflow-y:scroll;
+    scroll-behavior: smooth;
+
+}
+#logoAndbtn{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    animation: appear 2s;
+}
+#logoAndbtn h1{
+    display: flex;
+    font-family: "Aboreto", system-ui;
+    font-weight: 500;
+    font-style:normal;
+    font-size:400%;
+    text-shadow: 3px 3px 10px hsl(0, 0%, 100%);
+}
+img{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    box-shadow: 3px 3px 10px hsl(0, 0%, 0%);
+}
+button{
+    height: 30px;width: 150px;
+    font-size:medium;
+    padding: 10px;
+    background-color: hsl(21, 100%, 45%);;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.1s linear;
+    animation: appear ease-in 5s;
+    
+}
+button:hover{
+    background-color: hsl(0, 0%, 90%);
+    box-shadow: 2px 2px 3px hsl(0, 0%, 90%);
+}
+@keyframes appear {
+  0% {  opacity: 0; }
+  100% { opacity: 1; }
+}
+/*THIS IS FOR ACCOUNT REGISTRATION AND LOGIN*/
+.container{
+    position: absolute;
+}
+.form-box {
+    display: none;
+    background-color: var(--bg-color);
+    border: solid var(--accent);
+    border-radius: 16px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.12);
+    position: relative;
+    overflow: hidden;
+    width:300px;
+    height: 100vh;
+    max-width: 95%;
+    padding: 2.5rem;
+}
+
+.form-box.active ,.container {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+h2 {
+    margin-bottom: 0.5rem;
+    color: #222;
+    font-size: 1.8rem;
+}
+p.subtitle {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+.input-group {
+    margin-bottom: 1.25rem;
+}
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #444;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.input-group input {
+    width: 250px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+.input-group input:focus {
+    outline: none;
+    border-color: #fc6011;
+    box-shadow: 0 0 0 3px rgba(252, 96, 17, 0.15);
+}
+.forgot-pass {
+    display: block;
+    text-align: right;
+    font-size: 0.8rem;
+    color: #fc6011;
+    text-decoration: none;
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+}
+.forgot-pass:hover {
+    text-decoration: underline;
+}
+.btn {
+    text-decoration: none;
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(to right, #ff9944, #fc6011);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s ease, opacity 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn:hover {
+    opacity: 0.95;
+}
+.btn:active {
+    transform: scale(0.98);
+}
+.switch-text {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+.switch-text a {
+    color: #fc6011;
+    text-decoration: none;
+    font-weight: 600;
+}
+.switch-text a:hover {
+    text-decoration: underline;
+}
+}

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuisine Explorer | Cookbook</title>
+
+  <style>
+    :root {
+      --bg-color: #fdfbf7;
+      --text-main: #333333;
+      --text-light: #666666;
+      --accent: #d32f2f; 
+      --header-orange: #e4510e; /* Matching your image background */
+      --card-bg: #ffffff;
+      --border-radius: 12px;
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      font-family: 'Poppins', sans-serif;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+    }
+
+  
+  
+    header {
+     background-color: var(--header-orange);
+      padding: 15px 10%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px; 
+    }
+
+  
+    .header-icon {
+      height: 42px; 
+      width: auto;
+      filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.2)); 
+    }
+
+    .logo-container h2 { 
+      font-family: 'Lora', serif; 
+      font-size: 32px; 
+      letter-spacing: 2px; 
+      text-transform: uppercase;
+      font-weight: 600;
+      color: rgb(229, 229, 229);
+      z-index: 1000;
+     
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      margin-left: 25px;
+      font-weight: 500;
+      font-size: 15px;
+      transition: opacity 0.3s;
+    }
+    input[type="text"],
+  textarea {
+    width: 90%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  textarea {
+    resize: none;
+    height: 100px;
+  }
+  .rating {
+    margin-top: 10px;
+  }
+  .rating input {
+    margin-right: 5px;
+        }
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #e65100;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color:#e65100;
+  }
+  .back-btn {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      background: #1a1a1a;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid #efefef;
+    color:#666666;
+    font-size: 14px;
+    background-color: rgb(234, 234, 234);
+    font-family: 'Lora', serif;
+  }
+  .socials {
+    margin: 15px 0 25px 0;
+  }
+  .socials a {
+    text-decoration: none;
+    color: #333333;
+    font-size: 20px;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+  }
+  .socials a:hover {
+    color:#e65100;
+  }
+  .footer-links a {
+    color: #666666;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; }
+      .hero img { width: 100%; height: 250px; }
+      .container { width: 92%; }
+    }
+    nav a:hover { opacity: 0.8; }
+    
+    .container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding:40px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    text-align: left;
+    font-family: 'Lora', serif;
+    }
+   
+</style>
+</head>
+<head>
+
+<a href="index.html" class="back-btn"><span>←</span> Back to Homepage</a>
+
+<div class="header">
+    <header>
+      <div class="logo-container h2">
+        <h2>🍴 FEEDBACK</h2>
+      </div>
+    <nav>
+        <a href="index.html">Home</a>
+      </nav>
+      </header>
+</div>
+<div class="container">
+  <form> 
+           <b> <label for="name">NAME:</label> <br>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            <br>
+            <br>
+            <!-- RATING -->
+            <label>SATISFACTION:</label>
+            <div class="rating">
+                <input type="radio" name="rating" value="1">1
+                <input type="radio" name="rating" value="2">2
+                <input type="radio" name="rating" value="3">3
+                <input type="radio" name="rating" value="4">4
+                <input type="radio" name="rating" value="5">5
+            </div>
+            <br>
+            <!-- COMMENTS -->
+            <label for="comments">COMMENTS:</label> <br>
+            <textarea id="comments" name="comments" placeholder="Enter your feedback"></textarea><br>
+            <!-- SUBMIT -->
+            <button type="submit">Submit</button>  </b>
+</form>
+</div>
+
+<div class="footer">
+    <footer>
+      <p>Connect With Us</p>
+      <div class="socials">
+        <a href="https://twitter.com" target="_blank" aria-label="Twitter">𝕏</a>
+        <a href="https://youtube.com" target="_blank" aria-label="YouTube">▶</a>
+        <a href="https://facebook.com" target="_blank" aria-label="Facebook">ⓕ</a>
+      </div>
+  
+      <div class="footer-links">
+        <a href="privacy_policy.html">Privacy Policy</a> | 
+        <a href="visitor_agreement.html">Visitor Agreement</a>
+      </div>
+      <br>
+      <hr>
+      <p>&copy; 2026 Cuisine Explorer. All rights reserved.</p>
+    </footer>
+  </div>
+</div>
+</body>
+</html>
+  

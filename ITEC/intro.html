@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="intro.css"></link>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Cinzel+Decorative:wght@400;700;900&family=Didact+Gothic&family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=Special+Elite&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="logoAndbtn">
+        <img src="indexfolder/picturesfolder/svgviewer-output (5)-cropped.svg"></img><h1>Welcome to cuisine explorer</h1>
+        <a href="#" id="termsAndAgreementFormbtn" class="btn">Let's get Started</a>
+        <div class="container">
+            <!--THIS IS FOR VISITORS AGREEMENT-->
+    <div class="form-box" id="termsAndAgreementForm">
+        <h2>Terms and Agreement</h2>
+        <p class="subtitle">Please read it before entering</p>
+        <p> By creating an account or using our services, you agree to these Terms. If you do not agree, do not use the service.</p>
+        <ol>
+            <li>Any negative behavior will lead to temporary to permanent account suspension. Users should be respectful and create a peacful environment. </li>
+            <br>
+            <li>You are responsible for keeping your password secure.You must provide accurate, current registration info.</li>
+            <br>
+            <li>You agree not to engage in the following banned activities:Abuse: Harassing, defaming, or threatening other users.Illegal Acts: Using the service for scams, fraud, or illegal transactions.Disruption: Deploying viruses, bots, or scraping tools to damage the platform.IP Theft: Stealing, copying, or distributing our intellectual property without permission.</li>
+            <br>
+            <li>We reserve the right to suspend or delete your account at any time, without prior notice, if you violate these terms.</li>
+            <br>
+            <li>The service is provided "as is." We are not liable for any indirect damages, data loss, or service interruptions.</li>
+            <br>
+            <li>Data you give us: Name, email address, billing information, and profile details.Data collected automatically: IP address, browser type, device info, and cookie tracking data</li>
+            <br>
+            <li>We use your information strictly to:Provide, maintain, and improve our services.Process payments and manage your account.Send essential system notifications or updates.</li>
+            <br>
+            <li>We do not sell your personal data. We only share data with trusted third parties necessary to run our business (e.g., payment processors like Stripe, cloud hosting like AWS).</li>
+            <br>
+            <li>Depending on your location, you have the right to access, update, or request the permanent deletion of your personal data by contacting us.</li>
+        </ol>
+        <a></a>
+        <a href="#" id="toLogin1" class="btn">Log in</a>
+    </div>
+    <div class="form-box" id="loginForm">
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Please enter your details to sign in.</p>
+
+        <form id="jsLoginForm">
+
+
+            <div class="input-group">
+                <label for="login-username">Username</label>
+                <input type="text" id="login-username" placeholder="Enter your username" required>
+            </div>
+
+
+            <div class="input-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="••••••••" required>
+            </div>
+
+            
+            <a href="#" class="forgot-pass">Forgot password?</a>
+            <button type="submit" class="btn" >Log in</button>
+        </form>
+
+        <p class="switch-text">
+            Don't have an account? <a href="#" id="toRegister">Sign up</a>
+            <a href="indexfolder/index.html">Guestmode</a>
+        </p>
+    </div>
+    <div class="form-box" id="registerForm">
+        <h2>Create Account</h2>
+        <p class="subtitle">Get started with your free account today.</p>
+        <form id="jsRegisterForm">
+
+
+            <div class="input-group">
+                <label for="reg-username">Username</label>
+                <input type="text" id="reg-username" placeholder="Choose a username" required>
+            </div>
+
+
+            <div class="input-group">
+                <label for="reg-password">Password</label>
+                <input type="password" id="reg-password" placeholder="Create a password" required>
+            </div>
+
+
+            <div class="input-group">
+                <label for="reg-confirm">Confirm Password</label>
+                <input type="password" id="reg-confirm" placeholder="Repeat your password" required>
+            </div>
+
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+
+
+        <p class="switch-text">
+            Already have an account? <a href="#" id="toLogin2">Log in</a>
+        </p>
+    </div>
+</div>
+    </div>
+    
+
+
+<script SRC="account.js"></script>
+</body>
+</html>
