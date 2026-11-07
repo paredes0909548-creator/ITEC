@@ -468,7 +468,7 @@ body {
 }
 
 .footer-container {
-  max-width: 1000px;
+  max-width: 1000px center;
   margin: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
