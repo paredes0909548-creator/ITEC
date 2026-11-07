@@ -1,4 +1,9 @@
 const storeContainer = document.getElementById('storeContainer');
+const modeToggleButton = document.getElementById('modeToggleButton');
 
 
-storeContainer.addEventListener('click')
+modeToggleButton.addEventListener('click',(e)=>{
+e.preventDefault();
+
+
+})
