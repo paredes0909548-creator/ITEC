@@ -7,10 +7,6 @@ body {
   background-color: #ebddc0; 
 }
 
-.storeContainer {
-height: 100%;width: 100%;
-}
-
 .navBar {
   display: flex;
   justify-content: space-between;
@@ -306,4 +302,10 @@ height: 100%;width: 100%;
   padding-top: 20px;
   font-size: 0.8rem;
   opacity: 0.7;
+}
+
+
+/*KERNEL MODE CSS*/
+#kernelInterface{
+  display: none;
 }
