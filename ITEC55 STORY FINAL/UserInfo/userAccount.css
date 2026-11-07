@@ -8,14 +8,10 @@
     --coffee-color:#6F4E37;
 }
 body{
-background-image:url(../Images/AddressBackground.jpg);
+background-image:  linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(../images/backgroundImage.jpg);
 background-repeat: no-repeat;
 background-size:cover;
 background-position: center;
-
-
-
-
 }
 
 
@@ -47,12 +43,10 @@ h1{
     font-style: normal;
 }
 
-a{
-    font-family: "Fredericka the Great", serif;
+.userFormRegistration, a,p{
     font-weight: 500;
     font-style: normal;
-    text-decoration: none;
-    color: inherit;
+    color: white;
 }
 
 
