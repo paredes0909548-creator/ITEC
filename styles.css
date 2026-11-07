@@ -1,0 +1,52 @@
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color:#5274aa;
+  color: #f8fafc;
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinks a {
+  color:#f8fafc;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.navLinks a:hover {
+  color: #38bdf8;
+}
+
+.navActions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.cart-btn,
+.prof-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.cart-btn img,
+.prof-btn img {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
