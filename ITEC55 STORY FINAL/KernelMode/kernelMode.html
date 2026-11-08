@@ -8,20 +8,19 @@
 </head>
 <body>
     <nav class="option">
-        <ul>
-            <li><button type="button" class="optionButton">Account</button></li>
-            <li><button type="button" class="optionButton">Transaction</button></li>
-            <li><button type="button" class="optionButton">Cart</button></li>
-            <li><button type="button" class="optionButton">history</button></li>
+        <ul id="sidebarNav">
+            <li><button type="button" class="optionButton active" data-target = "accountInterface">    Account    </button></li>
+            <li><button type="button" class="optionButton" data-target = "transactionInterface">Transaction</button></li>
+            <li><button type="button" class="optionButton" data-target = "cartInterface">       Cart       </button></li>
+            <li><button type="button" class="optionButton" data-target = "historyInterface">    history    </button></li>
         </ul>
     </nav>
 
     <div class="interface">
         
-        <div class="accountInterface" id="accountInterface">
-            <p>Name:<span id="userName"></span></p>
-
+        <div class="childInterface active" id="accountInterface">
             <ul>
+                <li>Name:                <span id="userName"></span></li>
                 <li>Country:             <span id="country"></span></li>
                 <li>Address Line 1:      <span id="addres1"></span></li>
                 <li>Address Line 2:      <span id="addres2"></span></li>
@@ -30,13 +29,26 @@
                 <li>Province:            <span id="province"></span></li>
                 <li>Postal / ZIP Code:   <span id="zipCode"></span></li>
                 <li>Phone Number:        <span id="phoneNumber"></span></li>
+                <li>Website:              <span></span></li>
+                <li>Language used:HTML,CSS,JavaScript,Java</li>
+                <li>Database: MySQL</li>
+                <li>Tools:</li>
+                <li>Frame Works:</li>
             </ul>
+        </div>
 
-            <p>Website:<span></span></p>
-            <p>Language used:HTML,CSS,JavaScript,Java</p>
-            <p>Database: MySQL</p>
-            <p>Tools:</p>
-            <p>Frame Works:</p>
+        <div class="childInterface" id="transactionInterface">
+            <ul>
+                <li>asdasd</li>
+            </ul>
+        </div>
+
+        <div class="childInterface" id="cartInterface">
+
+        </div>
+
+        <div class="childInterface" id="historyInterface">
+
         </div>
     </div>
     <script type="module" src="kernelMode.js"></script>

@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 body{
-    background-color: #6e5340;
+    background-color: #ebddc0;
     display: flex;
 }
 .option{
@@ -14,21 +14,46 @@ body{
 .optionButton{
     height: 60px;
     width: 100%;
-    background-color: #6e5340;
-    color: white;
+    background-color: #ebddc0;
     border: none;
     cursor: pointer;
     transition: 0.5s;
 }
 .optionButton:hover{
-    background-color: #ebddc0;
+    background-color: #6e5340;
 }
 .interface{
     min-width: 80%;
     height: 100vh;
     padding-left: 10px;
-    color: white;
 }
 ul{
     list-style: none;
 }
+
+
+.accountInterface{
+    display: none;
+}
+.transactionInterface{
+    display: none;
+}
+.cartInterface{
+    display: none;
+}       
+.historyInterface{
+    display: none;
+}    
+
+.accountInterface.active{
+    display: flex;
+}
+.transactionInterface.active{
+    display: flex;
+}
+.cartInterface.active{
+    display: flex;
+}       
+.historyInterface.active{
+    display: flex;
+}  
