@@ -8,7 +8,7 @@
     --coffee-color:#6F4E37;
 }
 body{
-background-image:  linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(../images/backgroundImage.jpg);
+background-image:  linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url();
 background-repeat: no-repeat;
 background-size:cover;
 background-position: center;

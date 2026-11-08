@@ -6,7 +6,6 @@ const userObjMaker = new userObj();
 const userObjFetcher = new userFetcher();
 
 let p = document.getElementById('status');
-let input = document.querySelector('input');
 
 const formWrapper = document.getElementById('formWrapper');
 
@@ -20,7 +19,7 @@ const userProfileName = document.getElementById('userProfileName');
 const userFormAddress = document.getElementById('userFormAddress');
 
 
-/* in here is when the user succefully register it will remove the userFormRegistration so that the user cannot accidentally sigup again*/
+
 async function updateUI(){
     const boolean =localStorage.getItem('boolean');
     const username =localStorage.getItem('username')
@@ -68,6 +67,7 @@ else if(username){
 updateUI();
 
 /* Registration logics*/
+const input = document.querySelector('input');
 userFormRegistration.addEventListener('submit', async(event) =>{
     event.preventDefault();
     
@@ -76,33 +76,13 @@ let email = document.getElementById('email').value.trim();
 let phone = document.getElementById('phone').value.trim(); 
 
     if (input.value.trim() === ""){
-        console.log("WALANG LAMAN BOIIII");
+        console.log("cannot be empty");
         return;
     }
 
-    let customerInfo = userObjMaker.userObjCreator(username,email,phone);
+    const customerInfo = userObjMaker.userObjCreator(username,email,phone);
 
-    try{
-    const data= await userObjFetcher.fetchCustomer(customerInfo);
-        console.log("Registration complete on UI!",data);
-
-        localStorage.setItem("username" , username)
-        localStorage.setItem("loggedUser", data.data.customerID);    
-        userFormRegistration.remove();
-        userFormAddress.style.display = 'flex';    
-
-
-        updateUI();
-
-        p.textContent = data.message;
-
-
-
-    }catch(error){
-        console.log(error.message);
-        p.textContent = error.message;
-    }
-  
+    localStorage.setItem('customerInfo',customerInfo);
 })
 
 
@@ -122,22 +102,9 @@ const customerId = localStorage.getItem('loggedUser');
 
 
 const userAddress = userObjMaker.userAddress(customerId, unitNum, streetName, barangay, city_municipality, province, postal_zip);
-console.log(userAddress);
 
-try{
-    const data =  await userObjFetcher.fetchCustomerAddress(userAddress);
-    console.log("Response: ",data)
-    localStorage.setItem('boolean', '1');
-    setTimeout(()=>{
-        window.location.replace("../UserInterface.html");
-    },3000) 
+localStorage.setItem('userAddress', userAddress);
 
-    p.textContent = data.message;
-
-}catch(error){
-    console.log(error.message);
-    p.textContent = error.message;
-}
 
 
 })
