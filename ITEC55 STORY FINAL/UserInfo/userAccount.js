@@ -3,7 +3,6 @@ import userObj from './userAccountJs/userObj.js';
 import RegistrationFunction from './userAccountJs/RegistrationFunctions.js';
 
 const userObjMaker = new userObj();
-const userObjFetcher = new userFetcher();
 
 let p = document.getElementById('status');
 
@@ -12,8 +11,6 @@ const formWrapper = document.getElementById('formWrapper');
 /* User INFO */
 const userInfoWrapper = document.getElementById('userInfoWrapper');
 const userFormRegistration = document.getElementById('userFormRegistration');
-const userProfilePic =document.getElementById('userProfilePic');
-const userProfileName = document.getElementById('userProfileName');
 
 /* ADDRESS INFO */
 const userFormAddress = document.getElementById('userFormAddress');
@@ -28,36 +25,6 @@ if( boolean === '1'){
     userFormAddress.remove();
     formWrapper.remove();
     userInfoWrapper.classList.add('show')
-
-    const firstLetter = username.trim().charAt(0).toUpperCase();  
-
-    userProfilePic.textContent  = firstLetter;
-    userProfileName.textContent = username;
-
-
-    const unitNumText = document.getElementById('unitNumText');
-
-    const barangayText = document.getElementById('barangayText');
-
-    const streetNameText = document.getElementById('streetNameText');
-
-    const cityMunicipalityText = document.getElementById('cityMunicipalityText');
-
-    const provinceText = document.getElementById('provinceText');
-
-    const postalZipText = document.getElementById('postalZipText');
-
-    const  userInfo = await userObjFetcher.fetchGetInfo();
-
-    unitNumText.textContent = userInfo.unitNum;
-    barangayText.textContent = userInfo.barangay;
-    streetNameText.textContent = userInfo.streetName;
-    cityMunicipalityText.textContent = userInfo.city_municipality;
-    provinceText.textContent = userInfo.province;
-    postalZipText.textContent = userInfo.postal_zip;
-
-    
-
 }
 else if(username){
     userFormRegistration.remove();
