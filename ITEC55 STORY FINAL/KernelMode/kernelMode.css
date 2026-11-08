@@ -1,0 +1,34 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body{
+    background-color: #6e5340;
+    display: flex;
+}
+.option{
+    min-width: 20%;
+    height: 100vh;
+}
+.optionButton{
+    height: 60px;
+    width: 100%;
+    background-color: #6e5340;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.optionButton:hover{
+    background-color: #ebddc0;
+}
+.interface{
+    min-width: 80%;
+    height: 100vh;
+    padding-left: 10px;
+    color: white;
+}
+ul{
+    list-style: none;
+}
