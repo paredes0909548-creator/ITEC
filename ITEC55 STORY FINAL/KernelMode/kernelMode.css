@@ -32,28 +32,9 @@ ul{
 }
 
 
-.accountInterface{
+.childInterface{
     display: none;
 }
-.transactionInterface{
-    display: none;
-}
-.cartInterface{
-    display: none;
-}       
-.historyInterface{
-    display: none;
-}    
-
-.accountInterface.active{
+.childInterface.active{
     display: flex;
 }
-.transactionInterface.active{
-    display: flex;
-}
-.cartInterface.active{
-    display: flex;
-}       
-.historyInterface.active{
-    display: flex;
-}  
