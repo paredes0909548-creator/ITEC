@@ -2,8 +2,9 @@ import userObj from './userAccountJs/userObj.js';
 import RegistrationFunction from './userAccountJs/RegistrationFunctions.js';
 
 const userObjMaker = new userObj();
+localStorage.setItem('userStatus','Guess');
 
-let p = document.getElementById('status');
+
 
 /* Registration INFO */
 const userFormRegistration = document.getElementById('userFormRegistration');
@@ -47,9 +48,10 @@ updateUI();
 
 /* Registration logics*/
 const input = document.querySelector('input');
-userFormRegistration.addEventListener('submit', async(event) =>{
+userFormRegistration.addEventListener('submit', async(e) =>{
+    let p = document.getElementById('status');
     const incrementId = id++; 
-    event.preventDefault();
+    e.preventDefault();
     
 let username = document.getElementById('username').value.trim();
 let email = document.getElementById('email').value.trim();
@@ -80,10 +82,11 @@ let password = document.getElementById('password').value.trim();
 
 
 /* LOGIN LOGIC*/
-userLogin.addEventListener('submit' , (e) =>{
-    e.preventDefault;
-    const userLoginInput = document.getElementById('userLoginInput');
-    const passwordLoginInput = document.getElementById('passwordLoginInput');
+userLogin.addEventListener('submit' , async(e) =>{
+    let p = document.getElementById('status');
+    e.preventDefault();
+    const userLoginInput = document.getElementById('userLoginInput').value.trim();
+    const passwordLoginInput = document.getElementById('passwordLoginInput').value.trim();
 
     if(userLoginInput ==="" || passwordLoginInput ===""){
         console.log("field cannot be empty");
@@ -91,9 +94,14 @@ userLogin.addEventListener('submit' , (e) =>{
         return;
     }
     const loginAccount = RegistrationFunction.loginChecker(userLoginInput,passwordLoginInput);
+    console.log(loginAccount);
+
     if(loginAccount !== null){
-        localStorage.setItem('customerStatus', loginAccount.customerName);
+        localStorage.setItem('userStatus', loginAccount.customerName);
         p.textContent = 'Login Succefully';
+
+        userLogin.classList.remove('active');
+        userFormAddress.classList.add('active');
     }
 
 

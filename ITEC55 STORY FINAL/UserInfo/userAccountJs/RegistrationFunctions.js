@@ -10,7 +10,7 @@ export default class RegistrationFunction{
    }
 
    static loginChecker(username,password){
-    const userAccount = JSON.parse(localStorage.getItem("Account")) || [];
+    const userAccount = JSON.parse(localStorage.getItem("Accounts")) || [];
     
     const accountExists = userAccount.find(user => user.customerName === username && user.customerPassword === password);
 
