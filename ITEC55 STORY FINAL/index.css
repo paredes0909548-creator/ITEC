@@ -3,6 +3,7 @@
   padding: 0px;
   box-sizing: border-box;
 }
+
 body {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #ebddc0; 
@@ -47,21 +48,21 @@ body {
   border-radius: 15px;
   border: none;
 }
-.prof-btn {
+.profBtn {
   background-color:  #ebddc0;
   width: 50px;height: 50px;
   border-radius: 50%;
   border: none;
 }
-.cart-btn{
+.cartBtn{
   padding: 0;
   border: 0;
   background: none;
   cursor: pointer;
 }
 
-.cart-btn img,
-.prof-btn img {
+.cartBtn img,
+.prof-Btn img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -72,12 +73,14 @@ body {
   width: 100%;
   max-height: 500px;
   overflow: hidden;
+
 }
 
 .underDashBanner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 
