@@ -1,4 +1,3 @@
-import userFetcher from './userAccountJs/userFetcher.js';
 import userObj from './userAccountJs/userObj.js';
 import RegistrationFunction from './userAccountJs/RegistrationFunctions.js';
 
@@ -6,50 +5,51 @@ const userObjMaker = new userObj();
 
 let p = document.getElementById('status');
 
-const formWrapper = document.getElementById('formWrapper');
-
 /* User INFO */
-const userInfoWrapper = document.getElementById('userInfoWrapper');
 const userFormRegistration = document.getElementById('userFormRegistration');
 
 /* ADDRESS INFO */
 const userFormAddress = document.getElementById('userFormAddress');
 
-
+let id =0;
 
 async function updateUI(){
-    const boolean =localStorage.getItem('boolean');
-    const username =localStorage.getItem('username')
 
-if( boolean === '1'){
-    userFormAddress.remove();
-    formWrapper.remove();
-    userInfoWrapper.classList.add('show')
-}
-else if(username){
-    userFormRegistration.remove();
-    userFormAddress.style.display = 'flex';
-}
+
 }
 updateUI();
 
 /* Registration logics*/
 const input = document.querySelector('input');
 userFormRegistration.addEventListener('submit', async(event) =>{
+    const incrementId = id++; 
     event.preventDefault();
     
 let username = document.getElementById('username').value.trim();
 let email = document.getElementById('email').value.trim();
-let phone = document.getElementById('phone').value.trim(); 
+let phone = document.getElementById('phone').value.trim();
 
     if (input.value.trim() === ""){
         console.log("cannot be empty");
+        p.textContent= 'cannot be empty';
         return;
     }
+    const customerInfo = userObjMaker.userObjCreator(username,email,phone,incrementId);
+   
 
-    const customerInfo = userObjMaker.userObjCreator(username,email,phone);
+        if(RegistrationFunction.userChecker(customerInfo.customerName)){
+            p.textContent='account already exist';
+            return;
+        }
+        else{
+            p.textContent = 'Registration succeful';
+            const userAccount = JSON.parse(localStorage.getItem('Accounts')) || [];
 
-    localStorage.setItem('customerInfo',customerInfo);
+            userAccount.push(customerInfo);
+            
+            localStorage.setItem('Accounts' , JSON.stringify(userAccount));
+            return;
+        }    
 })
 
 

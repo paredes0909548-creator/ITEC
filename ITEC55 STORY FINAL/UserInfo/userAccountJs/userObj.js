@@ -1,10 +1,11 @@
 export default class userObj{
 
-userObjCreator(username, email,phone){
+userObjCreator(username, email,phone,id){
 const customer = {
 customerName: username,
 customerEmail: email,
-customerPhone:phone
+customerPhone:phone,
+customerId:id
 }
 return customer;
 }

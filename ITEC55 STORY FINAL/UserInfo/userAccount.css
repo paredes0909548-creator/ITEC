@@ -42,15 +42,6 @@ h1{
     font-weight: 500;
     font-style: normal;
 }
-
-.userFormRegistration, a,p{
-    font-weight: 500;
-    font-style: normal;
-    color: white;
-}
-
-
-
 .formWrapper{
     min-height: 100vh;min-width: 100%;
     display: flex;
@@ -93,128 +84,17 @@ form button{
 height: 30px;
 width: 100px;
 }
-
+a,p{
+    font-weight: 500;
+    font-style: normal;
+    color: white;
+}
+#userFormRegistration .status{
+    color: red;
+}
 #userForm{
     display: flex;
 }
 #userFormAddress{
     display: none;
-
-}
-
-
-.userInfoWrapper{
-    justify-content: center;
-    flex-direction: column;
-    display: none;
-}
-.userInfoWrapper.show{
-    display: flex;
-}
-.userInfoChild{
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-
-}
-
-.userProfile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    height: 200px; width: 200px;
-    border-radius: 50%;
-    background-color: var(--coffee-color);
-    border: none;
-    text-decoration: none;
-
-    margin: 50px;
-}
-#userProfilePic {
-    color: wheat !important; 
-    font-family: Arial, sans-serif;
-    font-size: 100px; /* Makes the initial letter large and readable */
-    font-weight: bold;
-    margin: 0;
-    padding: 0;
-    text-transform: uppercase;
-}
-.userProfileName{
-    font-size: 30px;
-    font-family: 'Courier New', Courier, monospace;
-    color: aliceblue;
-}
-
-.infoHeaders{
-    margin-left: 30px;
-    font-size: 30px;
-    color: var(--primary-color);
-}
-dd{
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-
-    width: 800px;
-    padding: 10px;
-    gap:15px;
-    
-    overflow-x:auto ;
-
-    margin-left: 30px;
-    margin-bottom: 20px;
-    
-    font-size: 20px;
-    min-height: 70px;
-    color: aliceblue;
-    background-color: #6F4E37;
-}
-
-
-dd::-webkit-scrollbar{
-background-color: var(--coffee-color);
-}
-dd::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color, aliceblue); 
-    border-radius: 10px; 
-    
-    border: 2px solid #6F4E37; 
-}
-
-
-dd button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-left:auto ;
-
-    height: 35px;
-    width: 35px;
-    border-radius: 50%;
-    
-    font-size: 30px;
-
-    border: none;
-    background:none;
-
-    transition: 0.5s;
-}
-dd button:hover{
-    background-color: var(--primary-color);
-}
-
-
-
-
-
-
-
-
-
-
-footer{
-    background-color: #6F4E37;
-   
 }

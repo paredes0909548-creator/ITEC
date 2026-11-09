@@ -1,7 +1,11 @@
 export default class RegistrationFunction{
 
-   static profilePic(username,profile){
-        let letterProfile = username.charAt(0).toUpperCase();
-        profile.value = letterProfile;
-    }
+   static userChecker(usernameToCheck){
+
+    const allAccounts = JSON.parse(localStorage.getItem("Accounts")) || [];
+    
+    const accountExists = allAccounts.some(user => user.customerName === usernameToCheck);
+    
+    return accountExists; 
+   }
 }
