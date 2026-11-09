@@ -5,8 +5,15 @@ const userObjMaker = new userObj();
 
 let p = document.getElementById('status');
 
-/* User INFO */
+/* Registration INFO */
 const userFormRegistration = document.getElementById('userFormRegistration');
+const registrationButton = document.getElementById('registrationButton');
+userFormRegistration.classList.add('active'); /* This shows the button initially */
+
+
+/* Login INFO*/
+const userLogin = document.getElementById('userLogin');
+const loginButton = document.getElementById('loginButton');
 
 /* ADDRESS INFO */
 const userFormAddress = document.getElementById('userFormAddress');
@@ -15,6 +22,17 @@ let id =0;
 
 async function updateUI(){
 
+    loginButton.addEventListener('click',(e)=>{
+        e.preventDefault();
+        userFormRegistration.classList.remove('active');
+        userLogin.classList.add('active');
+    });
+
+        registrationButton.addEventListener('click',(e)=>{
+        e.preventDefault();
+        userFormRegistration.classList.add('active');
+        userLogin.classList.remove('active');
+    });
 
 }
 updateUI();
@@ -27,14 +45,14 @@ userFormRegistration.addEventListener('submit', async(event) =>{
     
 let username = document.getElementById('username').value.trim();
 let email = document.getElementById('email').value.trim();
-let phone = document.getElementById('phone').value.trim();
+let password = document.getElementById('password').value.trim();
 
     if (input.value.trim() === ""){
         console.log("cannot be empty");
         p.textContent= 'cannot be empty';
         return;
     }
-    const customerInfo = userObjMaker.userObjCreator(username,email,phone,incrementId);
+    const customerInfo = userObjMaker.userObjCreator(username,email,password,incrementId);
    
 
         if(RegistrationFunction.userChecker(customerInfo.customerName)){
@@ -51,6 +69,9 @@ let phone = document.getElementById('phone').value.trim();
             return;
         }    
 })
+
+
+/* LOGIN LOGIC*/
 
 
 

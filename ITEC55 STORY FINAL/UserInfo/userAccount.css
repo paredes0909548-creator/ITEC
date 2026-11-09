@@ -92,9 +92,27 @@ a,p{
 #userFormRegistration .status{
     color: red;
 }
-#userForm{
-    display: flex;
+
+
+/*NOT ACTIVE STATE*/
+#userFormRegistration{
+    display: none;
+}
+#userLogin{
+    display: none;
 }
 #userFormAddress{
     display: none;
+}
+
+/*ACTIVE STATE*/
+#userFormRegistration.active{
+    display: flex;
+}
+
+#userLogin.active{
+    display: flex;
+}
+#userFormAddress.active{
+    display: flex;
 }

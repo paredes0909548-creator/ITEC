@@ -20,18 +20,33 @@
     <div class="formWrapper" id="formWrapper">
         <form id="userFormRegistration">
             <label for="username">Username</label>
-            <input type="text" class="username" id="username">
+            <input type="text" class="userInfo" id="username">
 
-            <label for="email">Email</label>
-            <input type="text" class="email" id="email">
+            <label for="password">Password</label>
+            <input type="text" class="userInfo" id="password">
 
-            <label for="phone">Phone Number</label>
-            <input type="text" class="phone" id="phone">
+            <label for="email">email</label>
+            <input type="text" class="userInfo" id="email">
             <button type="submit" id="userFormSubmit">Submit</button>
 
             <br>
         
-            <p>Already have an account?</p><a href="">click here to LogIn</a>
+            <p>Already have an account?</p><a id="loginButton" href="">click here to LogIn</a>
+            <p class="status" id="status"></p>
+        </form>
+
+        <form id="userLogin">
+            <label for="username">Username</label>
+            <input type="text" class="userInfo" id="username">
+
+            <label for="password">Password</label>
+            <input type="text" class="userInfo" id="password">
+
+            <button type="submit" id="userLoginSubmit">Submit</button>
+
+            <br>
+        
+            <p>Don't have an account?</p><a href="" id="registrationButton">click here to Register</a>
             <p class="status" id="status"></p>
         </form>
 
