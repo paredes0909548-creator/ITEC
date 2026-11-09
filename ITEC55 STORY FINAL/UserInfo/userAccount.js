@@ -8,7 +8,6 @@ let p = document.getElementById('status');
 /* Registration INFO */
 const userFormRegistration = document.getElementById('userFormRegistration');
 const registrationButton = document.getElementById('registrationButton');
-userFormRegistration.classList.add('active'); /* This shows the button initially */
 
 
 /* Login INFO*/
@@ -21,6 +20,7 @@ const userFormAddress = document.getElementById('userFormAddress');
 let id =0;
 
 async function updateUI(){
+    const userStatus = localStorage.getItem('userStatus');
 
     loginButton.addEventListener('click',(e)=>{
         e.preventDefault();
@@ -33,6 +33,14 @@ async function updateUI(){
         userFormRegistration.classList.add('active');
         userLogin.classList.remove('active');
     });
+
+    if(userStatus === "Guess"){
+    userFormRegistration.classList.add('active'); /* This shows the button initially */
+    }
+    else{
+        userFormRegistration.classList.remove('active');
+        userFormAddress.classList.add('active');
+    }
 
 }
 updateUI();
@@ -72,7 +80,27 @@ let password = document.getElementById('password').value.trim();
 
 
 /* LOGIN LOGIC*/
+userLogin.addEventListener('submit' , (e) =>{
+    e.preventDefault;
+    const userLoginInput = document.getElementById('userLoginInput');
+    const passwordLoginInput = document.getElementById('passwordLoginInput');
 
+    if(userLoginInput ==="" || passwordLoginInput ===""){
+        console.log("field cannot be empty");
+        p.textContent = "field cannot be empty";
+        return;
+    }
+    const loginAccount = RegistrationFunction.loginChecker(userLoginInput,passwordLoginInput);
+    if(loginAccount !== null){
+        localStorage.setItem('customerStatus', loginAccount.customerName);
+        p.textContent = 'Login Succefully';
+    }
+
+
+
+
+
+})
 
 
 /* Address logics*/
