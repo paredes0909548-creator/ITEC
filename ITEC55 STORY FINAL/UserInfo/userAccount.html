@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="userAccount.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Splash&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Splash&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="formWrapper" id="formWrapper">
+        <form id="userFormRegistration">
+            <label for="username">Username</label>
+            <input type="text" class="userInfo" id="username">
+
+            <label for="password">Password</label>
+            <input type="text" class="userInfo" id="password">
+
+            <label for="email">email</label>
+            <input type="text" class="userInfo" id="email">
+            <button type="submit" id="userFormSubmit">Submit</button>
+
+            <br>
+        
+            <p>Already have an account?</p><a id="loginButton" href="">click here to LogIn</a>
+            <p class="status" id="status"></p>
+        </form>
+
+        <form id="userLogin">
+            <label for="username">Username</label>
+            <input type="text" class="userInfo" id="username">
+
+            <label for="password">Password</label>
+            <input type="text" class="userInfo" id="password">
+
+            <button type="submit" id="userLoginSubmit">Submit</button>
+
+            <br>
+        
+            <p>Don't have an account?</p><a href="" id="registrationButton">click here to Register</a>
+            <p class="status" id="status"></p>
+        </form>
+
+
+
+
+        <form id="userFormAddress">
+            <h2>Address:</h2>
+            <br>
+            <label for="unitNum"> Unit Number N/A if none</label>
+            <input type="text" class="unitNum" id="unitNum">
+
+            <label for="streetName"> Street Name N/A if none</label>
+            <input type="text" class="streetName" id="streetName">
+
+            <label for="barangay"> Barangay N/A if none</label>
+            <input type="text" class="barangay" id="barangay">
+
+            <label for="city_municipality"> City Municipality N/A if none</label>
+            <input type="text" class="city_municipality" id="city_municipality">
+
+            <label for="province"> Province N/A if none</label>
+            <input type="text" class="province" id="province">
+
+            <label for="postal_zip"> Postal Zip Number N/A if none</label>
+            <input type="text" class="postal_zip" id="postal_zip">
+
+            <button type="submit" id="userFormAddressSubmit"> Submit</button>
+            <p id="status"></p>
+
+        </form>
+    </div>
+
+    
+
+<script type="module" src="userAccount.js"></script>
+
+
+</body>
+
+</html>

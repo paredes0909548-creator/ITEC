@@ -53,3 +53,12 @@ ul{
 .childInterface.active{
     display: flex;
 }
+
+
+/*Account Interface*/
+
+
+/*Transaction Interface*/
+.transactionProcess{
+    display: none;
+}
