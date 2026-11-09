@@ -10,8 +10,3 @@ localStorage.setItem('mode', 3);
 window.location.replace('KernelMode/kernelMode.html');
 })
 
-profBtn.addEventListener('click',()=>{
-
-
-    
-})
