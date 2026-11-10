@@ -2,9 +2,6 @@ import userObj from './userAccountJs/userObj.js';
 import RegistrationFunction from './userAccountJs/RegistrationFunctions.js';
 
 const userObjMaker = new userObj();
-localStorage.setItem('userStatus','Guess');
-
-
 
 /* Registration INFO */
 const userFormRegistration = document.getElementById('userFormRegistration');
@@ -21,7 +18,29 @@ const userFormAddress = document.getElementById('userFormAddress');
 let id =0;
 
 async function updateUI(){
+    if(!localStorage.getItem('userStatus')){
+        localStorage.setItem('userStatus', 'Guess');
+    }
+    if(!localStorage.getItem('addressStatus')){
+        localStorage.setItem('addressStatus',0);
+    }
     const userStatus = localStorage.getItem('userStatus');
+    const addressStatus = localStorage.getItem('addressStatus');
+            /* Check if it is guess mode or not */
+    if(userStatus === "Guess"){
+    userFormRegistration.classList.add('active'); /* This shows the button initially */
+    }
+    else{
+        userFormRegistration.classList.remove('active');
+        userFormAddress.classList.add('active');
+    }
+        if(addressStatus == 1){
+            window.location.replace('../index.html');
+        }
+ 
+}
+
+updateUI();
 
     loginButton.addEventListener('click',(e)=>{
         e.preventDefault();
@@ -35,19 +54,7 @@ async function updateUI(){
         userLogin.classList.remove('active');
     });
 
-    if(userStatus === "Guess"){
-    userFormRegistration.classList.add('active'); /* This shows the button initially */
-    }
-    else{
-        userFormRegistration.classList.remove('active');
-        userFormAddress.classList.add('active');
-    }
-
-}
-updateUI();
-
 /* Registration logics*/
-const input = document.querySelector('input');
 userFormRegistration.addEventListener('submit', async(e) =>{
     let p = document.getElementById('status');
     const incrementId = id++; 
@@ -57,7 +64,7 @@ let username = document.getElementById('username').value.trim();
 let email = document.getElementById('email').value.trim();
 let password = document.getElementById('password').value.trim();
 
-    if (input.value.trim() === ""){
+    if (username === "" || email === "" || password === ""){
         console.log("cannot be empty");
         p.textContent= 'cannot be empty';
         return;
@@ -122,14 +129,19 @@ const city_municipality = document.getElementById('city_municipality').value.tri
 const province = document.getElementById('province').value.trim();
 const postal_zip = document.getElementById('postal_zip').value.trim();
 
-const customerId = localStorage.getItem('loggedUser');
-
-
-const userAddress = userObjMaker.userAddress(customerId, unitNum, streetName, barangay, city_municipality, province, postal_zip);
-
-localStorage.setItem('userAddress', userAddress);
+const userName = localStorage.getItem('userStatus');
+const userAccounts = JSON.parse(localStorage.getItem('Accounts'));
+const account = userAccounts.find(user => user.customerName == userName);
 
 
 
+
+const userAddress = userObjMaker.userAddress(account.customerId, unitNum, streetName, barangay, city_municipality, province, postal_zip);
+
+console.log(userAddress);
+const userAdressList = JSON.parse(localStorage.getItem('Address')) || [];
+userAdressList.push(userAddress);
+localStorage.setItem('Address', JSON.stringify(userAdressList));
+localStorage.setItem('addressStatus', 1);
 })
 

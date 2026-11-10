@@ -13,23 +13,65 @@ background-repeat: no-repeat;
 background-size:cover;
 background-position: center;
 }
-
-
-.navigator{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--primary-color);
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 85px;
+  padding: 15px 30px;
+  background-color:#6e5340;
+  color: #f8fafc;
 }
-.navChild{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
-    width: fit-content;
 
-    margin-right: 20px;
+.navLinks {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
 }
+
+.navLinks a {
+  color:#f8fafc;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.navLinks a:hover {
+  color: #38bdf8;
+}
+
+.navActions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.searchBar{
+  padding: 5px;
+  height: 20px;
+  border-radius: 15px;
+  border: none;
+}
+.profBtn {
+  background-color:  #ebddc0;
+  width: 50px;height: 50px;
+  border-radius: 50%;
+  border: none;
+}
+.cartBtn{
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.cartBtn img,
+.profBtn img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
 
 h1{
     height: 100px;

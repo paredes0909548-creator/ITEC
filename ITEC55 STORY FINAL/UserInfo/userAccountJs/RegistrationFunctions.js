@@ -17,5 +17,20 @@ export default class RegistrationFunction{
     return accountExists ?? null;
    }
 
+   static addressChecker(userFormAddress){
+
+      userFormAddress.addEventListener('submit',(e)=>{
+         e.preventDefault();
+         const addressStatus = localStorage.getItem('addressStatus');
+         if(addressStatus == 0){
+
+         }
+
+         })
+   }
+
+   addresMaker(){
+      
+   }
 
 }
