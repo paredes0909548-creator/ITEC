@@ -29,8 +29,29 @@ export default class RegistrationFunction{
          })
    }
 
-   addresMaker(){
-      
-   }
+    static updateUI(userFormRegistration,userFormAddress,formWrapper,userInfo){
+    if(!localStorage.getItem('userStatus')){
+        localStorage.setItem('userStatus', 'Guess');
+    }
+    if(!localStorage.getItem('addressStatus')){
+        localStorage.setItem('addressStatus',0);
+    }
+    const userStatus = localStorage.getItem('userStatus');
+    const addressStatus = localStorage.getItem('addressStatus');
+            /* Check if it is guess mode or not */
+    if(userStatus === "Guess"){
+    userFormRegistration.classList.add('active'); /* This shows the button initially */
+    }
+    else{
+        userFormRegistration.classList.remove('active');
+        userFormAddress.classList.add('active');
+    }
+        if(addressStatus == 1){
+         formWrapper.classList.add('active');
+         userInfo.classList.add('active');
+
+      }
+ 
+}
 
 }

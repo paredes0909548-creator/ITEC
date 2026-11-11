@@ -12,6 +12,8 @@ background-image:  linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url
 background-repeat: no-repeat;
 background-size:cover;
 background-position: center;
+min-height: 100vh;
+overflow: auto;
 }
 .navBar {
   display: flex;
@@ -135,8 +137,32 @@ a,p{
     color: red;
 }
 
+/*USER INFO DESIGN*/
+.userInfo{
+    height: 100vh;
+    width: 100wh;
+}
+.userInfoProfile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+
+    background-color: #6e5340;
+}
+
+
 
 /*NOT ACTIVE STATE*/
+.formWrapper.active{
+    display: none;
+}
+.profileWrapper{
+    display: none;
+}
 #userFormRegistration{
     display: none;
 }
@@ -148,6 +174,9 @@ a,p{
 }
 
 /*ACTIVE STATE*/
+.profileWrapper.active{
+    display: flex;
+}
 #userFormRegistration.active{
     display: flex;
 }

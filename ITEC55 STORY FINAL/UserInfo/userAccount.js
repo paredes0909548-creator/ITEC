@@ -2,6 +2,8 @@ import userObj from './userAccountJs/userObj.js';
 import RegistrationFunction from './userAccountJs/RegistrationFunctions.js';
 
 const userObjMaker = new userObj();
+/* FORM WRAPPER */
+const formWrapper = document.getElementById('formWrapper');
 
 /* Registration INFO */
 const userFormRegistration = document.getElementById('userFormRegistration');
@@ -15,32 +17,14 @@ const loginButton = document.getElementById('loginButton');
 /* ADDRESS INFO */
 const userFormAddress = document.getElementById('userFormAddress');
 
+/* USERINFO */
+const userInfo = document.getElementById('userInfo');
+
 let id =0;
 
-async function updateUI(){
-    if(!localStorage.getItem('userStatus')){
-        localStorage.setItem('userStatus', 'Guess');
-    }
-    if(!localStorage.getItem('addressStatus')){
-        localStorage.setItem('addressStatus',0);
-    }
-    const userStatus = localStorage.getItem('userStatus');
-    const addressStatus = localStorage.getItem('addressStatus');
-            /* Check if it is guess mode or not */
-    if(userStatus === "Guess"){
-    userFormRegistration.classList.add('active'); /* This shows the button initially */
-    }
-    else{
-        userFormRegistration.classList.remove('active');
-        userFormAddress.classList.add('active');
-    }
-        if(addressStatus == 1){
-            window.location.replace('../index.html');
-        }
- 
-}
 
-updateUI();
+
+RegistrationFunction.updateUI(userFormRegistration,userFormAddress,formWrapper,userInfo);
 
     loginButton.addEventListener('click',(e)=>{
         e.preventDefault();
@@ -132,7 +116,7 @@ const postal_zip = document.getElementById('postal_zip').value.trim();
 const userName = localStorage.getItem('userStatus');
 const userAccounts = JSON.parse(localStorage.getItem('Accounts'));
 const account = userAccounts.find(user => user.customerName == userName);
-
+console.log(account);
 
 
 
@@ -143,5 +127,7 @@ const userAdressList = JSON.parse(localStorage.getItem('Address')) || [];
 userAdressList.push(userAddress);
 localStorage.setItem('Address', JSON.stringify(userAdressList));
 localStorage.setItem('addressStatus', 1);
+RegistrationFunction.updateUI(userFormRegistration,userFormAddress,formWrapper,userInfo);
+
 })
 
