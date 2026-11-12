@@ -11,47 +11,43 @@ export default class RegistrationFunction{
 
    static loginChecker(username,password){
     const userAccount = JSON.parse(localStorage.getItem("Accounts")) || [];
-    
+
     const accountExists = userAccount.find(user => user.customerName === username && user.customerPassword === password);
 
     return accountExists ?? null;
    }
 
-   static addressChecker(userFormAddress){
+   static addressChecker(customerId){
+    const userAddress = JSON.parse(localStorage.getItem('Address')) || [];
 
-      userFormAddress.addEventListener('submit',(e)=>{
-         e.preventDefault();
-         const addressStatus = localStorage.getItem('addressStatus');
-         if(addressStatus == 0){
 
-         }
+    const addressExist = userAddress.find( address => address.customerId == customerId )
 
-         })
+    return addressExist ?? null;
+    
    }
 
-    static updateUI(userFormRegistration,userFormAddress,formWrapper,userInfo){
+    static intialUi(userFormRegistration,formWrapper,userFormAddress){
     if(!localStorage.getItem('userStatus')){
-        localStorage.setItem('userStatus', 'Guess');
+        localStorage.setItem('userStatus', 'guess');
     }
     if(!localStorage.getItem('addressStatus')){
         localStorage.setItem('addressStatus',0);
     }
     const userStatus = localStorage.getItem('userStatus');
-    const addressStatus = localStorage.getItem('addressStatus');
-            /* Check if it is guess mode or not */
-    if(userStatus === "Guess"){
-    userFormRegistration.classList.add('active'); /* This shows the button initially */
-    }
-    else{
-        userFormRegistration.classList.remove('active');
-        userFormAddress.classList.add('active');
-    }
-        if(addressStatus == 1){
-         formWrapper.classList.add('active');
-         userInfo.classList.add('active');
 
-      }
- 
+            /* Check if it is guess mode or not */
+    if(userStatus.trim() === "guess"){
+    userFormRegistration.classList.add('active');/* This shows the registration initially */
+    formWrapper.classList.add('active');
+    }    
+
+
+
+    
 }
+static showUserInfo(userInfo){
+    userInfo.classList.add('active');
+    }
 
 }

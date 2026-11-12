@@ -88,7 +88,6 @@ h1{
 }
 .formWrapper{
     min-height: 100vh;min-width: 100%;
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content:center ;
@@ -157,33 +156,22 @@ a,p{
 
 
 /*NOT ACTIVE STATE*/
-.formWrapper.active{
-    display: none;
-}
-.profileWrapper{
-    display: none;
-}
-#userFormRegistration{
-    display: none;
-}
-#userLogin{
-    display: none;
-}
+.formWrapper,
+.userInfo,
+.formWrapper,
+.profileWrapper,
+#userFormRegistration,
+#userFormLogin,
 #userFormAddress{
     display: none;
 }
 
 /*ACTIVE STATE*/
-.profileWrapper.active{
-    display: flex;
-}
-#userFormRegistration.active{
-    display: flex;
-}
-
-#userLogin.active{
-    display: flex;
-}
+.formWrapper.active,
+.userInfo.active,
+.profileWrapper.active,
+#userFormRegistration.active,
+#userFormLogin.active,
 #userFormAddress.active{
     display: flex;
 }

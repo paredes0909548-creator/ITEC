@@ -3,7 +3,6 @@ const modeToggleButton = document.getElementById('modeToggleButton');
 
 const profBtn = document.getElementById('profBtn');
 
-localStorage.setItem('userStatus','Guess');
 
 modeToggleButton.addEventListener('click',(e)=>{
 e.preventDefault();

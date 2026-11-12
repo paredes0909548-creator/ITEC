@@ -11,7 +11,7 @@ const registrationButton = document.getElementById('registrationButton');
 
 
 /* Login INFO*/
-const userLogin = document.getElementById('userLogin');
+const userFormLogin = document.getElementById('userFormLogin');
 const loginButton = document.getElementById('loginButton');
 
 /* ADDRESS INFO */
@@ -23,20 +23,24 @@ const userInfo = document.getElementById('userInfo');
 let id =0;
 
 
-
-RegistrationFunction.updateUI(userFormRegistration,userFormAddress,formWrapper,userInfo);
+window.addEventListener('pageshow',()=>{
+RegistrationFunction.intialUi(userFormRegistration,formWrapper);
+})
+RegistrationFunction.intialUi(userFormRegistration,formWrapper);
 
     loginButton.addEventListener('click',(e)=>{
         e.preventDefault();
         userFormRegistration.classList.remove('active');
-        userLogin.classList.add('active');
+        userFormLogin.classList.add('active');
     });
 
-        registrationButton.addEventListener('click',(e)=>{
+    registrationButton.addEventListener('click',(e)=>{
         e.preventDefault();
         userFormRegistration.classList.add('active');
-        userLogin.classList.remove('active');
+        userFormLogin.classList.remove('active');
     });
+
+
 
 /* Registration logics*/
 userFormRegistration.addEventListener('submit', async(e) =>{
@@ -69,11 +73,12 @@ let password = document.getElementById('password').value.trim();
             localStorage.setItem('Accounts' , JSON.stringify(userAccount));
             return;
         }    
-})
+        
+    })
 
 
 /* LOGIN LOGIC*/
-userLogin.addEventListener('submit' , async(e) =>{
+userFormLogin.addEventListener('submit' , async(e) =>{
     let p = document.getElementById('status');
     e.preventDefault();
     const userLoginInput = document.getElementById('userLoginInput').value.trim();
@@ -91,14 +96,19 @@ userLogin.addEventListener('submit' , async(e) =>{
         localStorage.setItem('userStatus', loginAccount.customerName);
         p.textContent = 'Login Succefully';
 
-        userLogin.classList.remove('active');
-        userFormAddress.classList.add('active');
+        const addressExist = RegistrationFunction.addressChecker(loginAccount.customerId);
+
+        if(addressExist !== null){
+            console.log('pumasok dito');
+            formWrapper.classList.remove('active');
+            RegistrationFunction.showUserInfo(userInfo);
+        }
+        else{
+            userFormLogin.classList.remove('active');
+            userFormRegistration.classList.remove('active');
+            userFormAddress.classList.add('active');
+        }
     }
-
-
-
-
-
 })
 
 
@@ -114,6 +124,7 @@ const province = document.getElementById('province').value.trim();
 const postal_zip = document.getElementById('postal_zip').value.trim();
 
 const userName = localStorage.getItem('userStatus');
+
 const userAccounts = JSON.parse(localStorage.getItem('Accounts'));
 const account = userAccounts.find(user => user.customerName == userName);
 console.log(account);
@@ -126,8 +137,7 @@ console.log(userAddress);
 const userAdressList = JSON.parse(localStorage.getItem('Address')) || [];
 userAdressList.push(userAddress);
 localStorage.setItem('Address', JSON.stringify(userAdressList));
-localStorage.setItem('addressStatus', 1);
-RegistrationFunction.updateUI(userFormRegistration,userFormAddress,formWrapper,userInfo);
-
+RegistrationFunction.intialUi(userFormRegistration,formWrapper);
 })
+
 
