@@ -90,25 +90,11 @@ userFormLogin.addEventListener('submit' , async(e) =>{
         return;
     }
     const loginAccount = RegistrationFunction.loginChecker(userLoginInput,passwordLoginInput);
-    console.log(loginAccount);
-
     if(loginAccount !== null){
         localStorage.setItem('userStatus', loginAccount.customerName);
         p.textContent = 'Login Succefully';
-
-        const addressExist = RegistrationFunction.addressChecker(loginAccount.customerId);
-
-        if(addressExist !== null){
-            console.log('pumasok dito');
-            formWrapper.classList.remove('active');
-            RegistrationFunction.showUserInfo(userInfo);
-        }
-        else{
-            userFormLogin.classList.remove('active');
-            userFormRegistration.classList.remove('active');
-            userFormAddress.classList.add('active');
-        }
     }
+    
 })
 
 

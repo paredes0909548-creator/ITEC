@@ -17,34 +17,34 @@ export default class RegistrationFunction{
     return accountExists ?? null;
    }
 
-   static addressChecker(customerId){
+   static addressChecker(customerId,userFormAddress,formWrapper,userInfo){
     const userAddress = JSON.parse(localStorage.getItem('Address')) || [];
 
 
     const addressExist = userAddress.find( address => address.customerId == customerId )
-
-    return addressExist ?? null;
+    if(addressExist){
+        formWrapper.classList.remove('active');
+        userInfo.classList.add('active');
+    }
+    else{
+        formWrapper.classList.add('active');
+        userFormAddress.classList.add('active');
+    }
     
    }
 
-    static intialUi(userFormRegistration,formWrapper,userFormAddress){
+    static intialUi(userFormRegistration,formWrapper){
     if(!localStorage.getItem('userStatus')){
         localStorage.setItem('userStatus', 'guess');
     }
-    if(!localStorage.getItem('addressStatus')){
-        localStorage.setItem('addressStatus',0);
-    }
+
     const userStatus = localStorage.getItem('userStatus');
 
             /* Check if it is guess mode or not */
     if(userStatus.trim() === "guess"){
     userFormRegistration.classList.add('active');/* This shows the registration initially */
     formWrapper.classList.add('active');
-    }    
-
-
-
-    
+    }
 }
 static showUserInfo(userInfo){
     userInfo.classList.add('active');
