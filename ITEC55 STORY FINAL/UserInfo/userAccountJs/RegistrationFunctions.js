@@ -33,7 +33,7 @@ export default class RegistrationFunction{
     
    }
 
-    static intialUi(userFormRegistration,formWrapper){
+    static intialUi(userFormRegistration,formWrapper,addressChecker,customerId,userFormAddress,userInfo){
     if(!localStorage.getItem('userStatus')){
         localStorage.setItem('userStatus', 'guess');
     }
@@ -45,6 +45,7 @@ export default class RegistrationFunction{
     userFormRegistration.classList.add('active');/* This shows the registration initially */
     formWrapper.classList.add('active');
     }
+    addressChecker(customerId,userFormAddress,formWrapper,userInfo);
 }
 static showUserInfo(userInfo){
     userInfo.classList.add('active');

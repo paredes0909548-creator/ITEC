@@ -24,9 +24,9 @@ let id =0;
 
 
 window.addEventListener('pageshow',()=>{
-RegistrationFunction.intialUi(userFormRegistration,formWrapper);
+RegistrationFunction.intialUi(userFormRegistration,formWrapper,addressChecker,customerId,userFormAddress,userInfo);
 })
-RegistrationFunction.intialUi(userFormRegistration,formWrapper);
+RegistrationFunction.intialUi(userFormRegistration,formWrapper,addressChecker,customerId,userFormAddress,userInfo);
 
     loginButton.addEventListener('click',(e)=>{
         e.preventDefault();
@@ -123,7 +123,7 @@ console.log(userAddress);
 const userAdressList = JSON.parse(localStorage.getItem('Address')) || [];
 userAdressList.push(userAddress);
 localStorage.setItem('Address', JSON.stringify(userAdressList));
-RegistrationFunction.intialUi(userFormRegistration,formWrapper);
+RegistrationFunction.intialUi(userFormRegistration,formWrapper,addressChecker,customerId,userFormAddress,userInfo);
 })
 
 
