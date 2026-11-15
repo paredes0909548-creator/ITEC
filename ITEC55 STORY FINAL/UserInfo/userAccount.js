@@ -24,9 +24,9 @@ let id =0;
 
 
 window.addEventListener('pageshow',()=>{
-RegistrationFunction.intialUi(userFormRegistration,formWrapper,addressChecker,customerId,userFormAddress,userInfo);
+RegistrationFunction.intialUi(userFormRegistration,formWrapper,userFormAddress,userInfo);
 })
-RegistrationFunction.intialUi(userFormRegistration,formWrapper,addressChecker,customerId,userFormAddress,userInfo);
+RegistrationFunction.intialUi(userFormRegistration,formWrapper,userFormAddress,userInfo);
 
     loginButton.addEventListener('click',(e)=>{
         e.preventDefault();
@@ -91,8 +91,10 @@ userFormLogin.addEventListener('submit' , async(e) =>{
     }
     const loginAccount = RegistrationFunction.loginChecker(userLoginInput,passwordLoginInput);
     if(loginAccount !== null){
-        localStorage.setItem('userStatus', loginAccount.customerName);
+        localStorage.setItem('userStatus', loginAccount.customerId);
         p.textContent = 'Login Succefully';
+        userFormLogin.classList.remove('active');
+        RegistrationFunction.intialUi(userFormRegistration,formWrapper,userFormAddress,userInfo);
     }
     
 })
@@ -112,7 +114,7 @@ const postal_zip = document.getElementById('postal_zip').value.trim();
 const userName = localStorage.getItem('userStatus');
 
 const userAccounts = JSON.parse(localStorage.getItem('Accounts'));
-const account = userAccounts.find(user => user.customerName == userName);
+const account = userAccounts.find(user => user.customerId == userName);
 console.log(account);
 
 
@@ -123,7 +125,7 @@ console.log(userAddress);
 const userAdressList = JSON.parse(localStorage.getItem('Address')) || [];
 userAdressList.push(userAddress);
 localStorage.setItem('Address', JSON.stringify(userAdressList));
-RegistrationFunction.intialUi(userFormRegistration,formWrapper,addressChecker,customerId,userFormAddress,userInfo);
+RegistrationFunction.intialUi(userFormRegistration,formWrapper,userFormAddress,userInfo);
 })
 
 

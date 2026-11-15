@@ -17,23 +17,7 @@ export default class RegistrationFunction{
     return accountExists ?? null;
    }
 
-   static addressChecker(customerId,userFormAddress,formWrapper,userInfo){
-    const userAddress = JSON.parse(localStorage.getItem('Address')) || [];
-
-
-    const addressExist = userAddress.find( address => address.customerId == customerId )
-    if(addressExist){
-        formWrapper.classList.remove('active');
-        userInfo.classList.add('active');
-    }
-    else{
-        formWrapper.classList.add('active');
-        userFormAddress.classList.add('active');
-    }
-    
-   }
-
-    static intialUi(userFormRegistration,formWrapper,addressChecker,customerId,userFormAddress,userInfo){
+    static intialUi(userFormRegistration,formWrapper,userFormAddress,userInfo){
     if(!localStorage.getItem('userStatus')){
         localStorage.setItem('userStatus', 'guess');
     }
@@ -42,13 +26,24 @@ export default class RegistrationFunction{
 
             /* Check if it is guess mode or not */
     if(userStatus.trim() === "guess"){
-    userFormRegistration.classList.add('active');/* This shows the registration initially */
-    formWrapper.classList.add('active');
+        userFormRegistration.classList.add('active'); /* This shows the registration initially */
+        formWrapper.classList.add('active');
     }
-    addressChecker(customerId,userFormAddress,formWrapper,userInfo);
-}
-static showUserInfo(userInfo){
-    userInfo.classList.add('active');
-    }
+    else{
+            /* CHECKS IF ADDRESS IS CREATED OR NOT */
+        const userAddress = JSON.parse(localStorage.getItem('Address')) || [];
+        const customerId = localStorage.getItem('userStatus');
 
+        const addressExist = userAddress.find( address => address.customerId == customerId )
+
+        if(addressExist){
+            formWrapper.classList.remove('active');
+            userInfo.classList.add('active');
+        }
+        else{
+            formWrapper.classList.add('active');
+            userFormAddress.classList.add('active');
+        }
+    }
+}
 }
