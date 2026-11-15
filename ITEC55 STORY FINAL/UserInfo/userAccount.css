@@ -132,8 +132,8 @@ a,p{
     font-style: normal;
     color: white;
 }
-#userFormRegistration .status{
-    color: red;
+.status{
+  color: red;
 }
 
 /*USER INFO DESIGN*/

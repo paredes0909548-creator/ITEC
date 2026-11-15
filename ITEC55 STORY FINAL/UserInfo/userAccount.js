@@ -16,6 +16,7 @@ const loginButton = document.getElementById('loginButton');
 
 /* ADDRESS INFO */
 const userFormAddress = document.getElementById('userFormAddress');
+const addressInput = document.querySelector('.addressInput');
 
 /* USERINFO */
 const userInfo = document.getElementById('userInfo');
@@ -44,7 +45,7 @@ RegistrationFunction.intialUi(userFormRegistration,formWrapper,userFormAddress,u
 
 /* Registration logics*/
 userFormRegistration.addEventListener('submit', async(e) =>{
-    let p = document.getElementById('status');
+    const p = document.querySelector('#registrationStatus');
     const incrementId = id++; 
     e.preventDefault();
     
@@ -54,7 +55,7 @@ let password = document.getElementById('password').value.trim();
 
     if (username === "" || email === "" || password === ""){
         console.log("cannot be empty");
-        p.textContent= 'cannot be empty';
+        p.textContent= 'field cannot be empty';
         return;
     }
     const customerInfo = userObjMaker.userObjCreator(username,email,password,incrementId);
@@ -79,7 +80,7 @@ let password = document.getElementById('password').value.trim();
 
 /* LOGIN LOGIC*/
 userFormLogin.addEventListener('submit' , async(e) =>{
-    let p = document.getElementById('status');
+    const p = document.querySelector('#loginStatus');
     e.preventDefault();
     const userLoginInput = document.getElementById('userLoginInput').value.trim();
     const passwordLoginInput = document.getElementById('passwordLoginInput').value.trim();
@@ -103,19 +104,25 @@ userFormLogin.addEventListener('submit' , async(e) =>{
 /* Address logics*/
 userFormAddress.addEventListener('submit', async(event) =>{
 event.preventDefault();
+const p = document.querySelector('#addressStatus');
 
-const unitNum = document.getElementById('unitNum').value.trim();
-const streetName = document.getElementById('streetName').value.trim();
-const barangay = document.getElementById('barangay').value.trim();
-const city_municipality = document.getElementById('city_municipality').value.trim();
-const province = document.getElementById('province').value.trim();
-const postal_zip = document.getElementById('postal_zip').value.trim();
+
+const unitNum = document.getElementById('unitNum');
+const streetName = document.getElementById('streetName');
+const barangay = document.getElementById('barangay');
+const city_municipality = document.getElementById('city_municipality');
+const province = document.getElementById('province');
+const postal_zip = document.getElementById('postal_zip');
+
+if(addressInput.value.trim() === ""){
+    p.textContent ="Field Cannot be empty";
+    return;
+}
 
 const userName = localStorage.getItem('userStatus');
 
 const userAccounts = JSON.parse(localStorage.getItem('Accounts'));
 const account = userAccounts.find(user => user.customerId == userName);
-console.log(account);
 
 
 
