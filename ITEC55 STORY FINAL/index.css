@@ -5,11 +5,12 @@
 }
 
 body {
+  height: 100vh; width: 100%;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #ebddc0; 
 }
 
-/*NAV BAR*/
+/*---------------------------------------NAV BAR---------------------------------------*/
 .navBar {
   display: flex;
   justify-content: space-between;
@@ -69,7 +70,7 @@ body {
   border-radius: 50%;
 }
 
-/*UNDERDASHBANNER*/
+/*---------------------------------------UNDERDASHBANNER---------------------------------------*/
 .underDashBanner {
   position: relative;
   width: 100%;
@@ -127,7 +128,7 @@ body {
   transform: scale(1.1);
 }
 
-/*PRODUCT SECTION*/
+/*---------------------------------------PRODUCT SECTION---------------------------------------*/
 .productSection {
   padding: 40px 30px;
 }
@@ -238,27 +239,35 @@ body {
   transform: scale(1.05);
 }
 
-/*PRODUCT INTERFACE*/
+/*---------------------------------------PRODUCT INTERFACE---------------------------------------*/
+.productInterfaceCloseBtn{
+  position: absolute;
+  top: 0; right: 0;
+  margin: 5px;
+}
+.productInterfaceCloseBtn:hover{
+  cursor: pointer;
+}
+.checkBox{
+  display: none;
+}
+
 .productInterfaceChild{
 position: relative;
 height: 600px;
 width: 500px;
 
 border-radius: 10px;
-background-color: #f4f4f5;
-
+background-color: #d1c9b1;
 }
 .imgContainerProductInterface {
   height: 300px;
-  width: 100%;
-  max-width: 350px; 
+  width: 100%; max-width: 350px; 
   margin:10px;
-  border-radius: 10px;
-  background-color: #d1c9b1;
-  
-  
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  background-color: white;
 }
-
 .productImage {
   width: 100%;
   height: 100%;
@@ -267,7 +276,26 @@ background-color: #f4f4f5;
   display: block;
 }
 
-/*FOOTER*/
+
+.productInterfaceAddToCartBtn {
+  width: 100%;
+  background-color: #b8a78f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 0 0 6px 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.productInterfaceAddToCartBtn:hover {
+  background-color: #97786c;
+}
+.productCardInterfaceOption{
+  display: flex;
+}
+
+/*---------------------------------------FOOTER---------------------------------------*/
 .footer {
   background-color: #594031;
   color: #eadec9;
@@ -354,13 +382,12 @@ background-color: #f4f4f5;
 
 /*DISPLAY ACTIVE*/
 .productInterface.active{
-  position: absolute;
   height: 100%; width: 100%;
-  top:0;left: 0;
+  position: fixed;
+  top: 0;
   display: flex;
   justify-content: center;
   align-items: center; 
-  border: solid black;
 }
 
 

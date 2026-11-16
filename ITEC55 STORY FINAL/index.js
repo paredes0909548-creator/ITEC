@@ -23,14 +23,22 @@ const productInterface = document.getElementById('productInterface');
 const imgContainerProductInterface = document.getElementById('imgContainerProductInterface');
 const addToCartBtn = document.querySelectorAll('.addToCartBtn');
 
+const productInterfaceCloseBtn = document.querySelector('.productInterfaceCloseBtn');
+
 addToCartBtn.forEach(button => {
     button.addEventListener('click', (e)=>{
         e.preventDefault();
         productInterface.classList.add('active');
         const productId = button.dataset.productId;
 
-        imgContainerProductInterface.innerHTML = `<img src="./images/clothes${productId}.jpg" alt="clothes${productId}" class="productImage">`
-        
+        imgContainerProductInterface.innerHTML = `<img src="./images/clothes${productId}.jpg" alt="clothes${productId}" class="productImage">
+        <button class="productInterfaceAddToCartBtn" type="button" data-product-id="${productId}" >Add to Cart</button>`
+
 
     })
 });
+
+productInterfaceCloseBtn.addEventListener('click', (e)=>{
+    productInterface.classList.remove('active');
+})
+
