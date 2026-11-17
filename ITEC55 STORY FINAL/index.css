@@ -321,7 +321,7 @@ body {
 .imgContainerProductInterface img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: top center;
   display: block;
   transition: transform 0.3s ease;
@@ -336,6 +336,20 @@ body {
   gap: 15px;
   align-items: center;
   justify-content: center;
+}
+.productInterfaceAddToCartBtn{
+  background-color: #b8a78f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.productInterfaceAddToCartBtn:hover{
+  background-color: #97786c;
+  color: white;
+  transform: scale(1.05);
 }
 
 .productInterfaceOptions input, 

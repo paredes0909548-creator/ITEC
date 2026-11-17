@@ -2,16 +2,20 @@ import kernelMode from "./kernelMode.js";
 export default class systemCall{
 
 
-    static itemObj(productID,qunatity,color){
+    static itemObj(productID,quantity,color){
+    const kernel = new kernelMode();
+    const productInfo = kernel.productInfo();
+    /* kailangan ko iloop para mag match yung Product id ng item and yung roduct id nung pinili ni customer and by that ma chcheck ko na if yung quantity nung product inside kernel is greater than the user wants okay tandaan mo yan ASHLEY *Note to self ito */
     const order= {
         productID:productID,
-        qunatity:qunatity,
+        quantity:quantity,
         color:color
     }
-    return order;
 
+    if(productInfo){
+        
     }
-
+}
     static processObj(CID,PID, state, priority, arrival, burst, remaining, time, registers){
         
         const process = {
@@ -28,6 +32,5 @@ export default class systemCall{
 
         return process;
     }
-
-
 }
+

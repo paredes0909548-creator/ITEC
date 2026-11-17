@@ -1,9 +1,14 @@
 export default class kernelMode{
-#item =[];
-#process =[];
 
-  pushItem(itemObj) {
-    this.#item.push(itemObj);
+#item =[
+{productID: 1, quantity: 20},
+{productID:2, quantity:35},
+{productID:3, quantity:10}
+];
+
+#process =[];
+  productInfo(){
+    return this.#item;
   }
 
   pushProcess(processObj) {
