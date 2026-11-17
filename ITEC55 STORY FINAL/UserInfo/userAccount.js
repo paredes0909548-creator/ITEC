@@ -1,5 +1,5 @@
-import userObj from './userAccountJs/userObj.js';
-import RegistrationFunction from './userAccountJs/RegistrationFunctions.js';
+import userObj from './userAccountFunctions/userObj.js';
+import RegistrationFunction from './userAccountFunctions/RegistrationFunctions.js';
 
 const userObjMaker = new userObj();
 /* FORM WRAPPER */
