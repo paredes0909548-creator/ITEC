@@ -240,60 +240,153 @@ body {
 }
 
 /*---------------------------------------PRODUCT INTERFACE---------------------------------------*/
-.productInterfaceCloseBtn{
+
+.productInterface {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba (0, 0, 0, 0.75);
+  backdrop-filter: blur (5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeinModal 0.3s ease forwards;
+}
+
+@keyframes fadeinModal {
+  to { opacity: 1; }
+}
+
+.productInterfaceChild {
+  background-color: #d1c9b1;
+  color: #1b1301;
+  width: 90%;
+  max-width: 440px;
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  border: 1px solid #b8a78f;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform: scale(0.95);
+  animation: scaleUpModal 0.3s ease forwards;
+}
+
+@keyframes scaleUpModal {
+  to { transform: scale(1); }
+}
+
+.productInterfaceCloseBtn {
   position: absolute;
-  top: 0; right: 0;
-  margin: 5px;
-}
-.productInterfaceCloseBtn:hover{
+  top: 15px;
+  right: 15px;
   cursor: pointer;
+  z-index: 10;
 }
-.checkBox{
+
+.productInterfaceCloseBtn:hover {
+    transform: scale(1.1);
+}
+
+.productInterfaceCloseBtn .checkBox {
   display: none;
 }
 
-.productInterfaceChild{
-position: relative;
-height: 600px;
-width: 500px;
+.productInterfaceCloseBtn svg {
+  fill: #97786c;
+  transition: fill 0.3s ease;
+  width: 24px;
+  height: 24px;
+}
 
-border-radius: 10px;
-background-color: #d1c9b1;
+.productInterfaceCloseBtn:hover svg {
+  fill: #b8a78f;
 }
+
 .imgContainerProductInterface {
-  height: 300px;
-  width: 100%; max-width: 350px; 
-  margin:10px;
-  border-radius: 10px 10px 0 0;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  background-color: white;
+  width: 100%;
+  height: 320px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #b8a78f;
 }
-.productImage {
+
+.imgContainerProductInterface img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Fills the box cleanly; switch to 'contain' if outfits get cropped */
-  object-position: center top; /* Keeps collars, necklines, and faces visible */
+  object-fit: cover;
+  object-position: top center;
   display: block;
+  transition: transform 0.3s ease;
 }
 
-
-.productInterfaceAddToCartBtn {
-  width: 100%;
-  background-color: #b8a78f;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 0 0 6px 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+.imgContainerProductInterface img:hover {
+    transform: scale(1.03); 
 }
 
-.productInterfaceAddToCartBtn:hover {
-  background-color: #97786c;
-}
-.productCardInterfaceOption{
+.productInterfaceOptions {
   display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
 }
+
+.productInterfaceOptions input, 
+.productInterfaceCloseBtn {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.productInterfaceOptions input[type="color"] {
+  appearance: none;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  background: none;
+}
+
+.productInterfaceOptions input[type="number"] {
+  background-color: #f8fafc;
+  border: 1px solid #b8a78f;
+  color: #1b1301;
+  padding: 8px 12px;
+  border-radius: 6px;
+  width: 80px;
+  font-size: 1rem;
+}
+
+#modalProductTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1b1301;
+    letter-spacing: 0.5px;
+    margin-top: 5px;
+}
+
+/*DISPLAY NONE*/
+.productInterface{
+  display: none;
+}
+
+/*DISPLAY ACTIVE*/
+.productInterface.active{
+  height: 100%; width: 100%;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
 
 /*---------------------------------------FOOTER---------------------------------------*/
 .footer {
@@ -369,29 +462,6 @@ background-color: #d1c9b1;
   font-size: 0.8rem;
   opacity: 0.7;
 }
-
-
-
-
-
-
-/*DISPLAY NONE*/
-.productInterface{
-  display: none;
-}
-
-/*DISPLAY ACTIVE*/
-.productInterface.active{
-  height: 100%; width: 100%;
-  position: fixed;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-}
-
-
-
 
 /*KERNEL MODE CSS*/
 #kernelInterface{
