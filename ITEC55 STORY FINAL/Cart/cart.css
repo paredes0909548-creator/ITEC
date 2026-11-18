@@ -1,0 +1,70 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh; width: 100%;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ebddc0; 
+}
+
+/*---------------------------------------NAV BAR---------------------------------------*/
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 85px;
+  padding: 15px 30px;
+  background-color:#6e5340;
+  color: #f8fafc;
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinks a {
+  color:#f8fafc;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.navLinks a:hover {
+  color: #38bdf8;
+}
+
+.navActions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.searchBar{
+  padding: 5px;
+  height: 20px;
+  border-radius: 15px;
+  border: none;
+}
+.profBtn {
+  background-color:  #ebddc0;
+  width: 50px;height: 50px;
+  border-radius: 50%;
+  border: none;
+}
+.cartBtn{
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.cartBtn img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
