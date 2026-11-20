@@ -1,12 +1,13 @@
 export default class kernelMode{
 
 #item =[
-{productID: 1, quantity: 20},
-{productID:2, quantity:35},
-{productID:3, quantity:10}
+{productID: 1, stocks: 20, price:10},
+{productID:2, stocks:35, price:20},
+{productID:3, stocks:10, price:30}
 ];
 
 #process =[];
+
   productInfo(){
     return this.#item;
   }
@@ -15,8 +16,26 @@ export default class kernelMode{
     this.#process.push(processObj);
   }
 
-
+deductStock(productId, qty) {
+    const target = this.#item.find(item => item.productID === productId);
+    if (target && target.quantity >= qty) {
+        target.quantity -= qty;
+    }
 }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const modeToggleButton = document.getElementById('modeToggleButton');
 
