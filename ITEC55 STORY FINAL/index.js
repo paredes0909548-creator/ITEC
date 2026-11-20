@@ -1,4 +1,4 @@
-import systemCall from "./KernelMode/systemCall.js";
+import systemCall from "./KernelMode/SystemCall/systemCall.js";
 
 const modeToggleButton = document.getElementById('modeToggleButton');
 

@@ -1,4 +1,4 @@
-import kernelMode from "./kernelMode.js";
+import kernelMode from "../kernelMode.js";
 export default class systemCall{
 
 
