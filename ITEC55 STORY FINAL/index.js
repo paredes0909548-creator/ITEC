@@ -16,7 +16,7 @@ window.location.replace('KernelMode/kernelMode.html');
 })
 
 profBtn.addEventListener('click', (e)=>{
-e.preventDefault;
+e.preventDefault();
 window.location.replace('UserInfo/userAccount.html');
 });
 

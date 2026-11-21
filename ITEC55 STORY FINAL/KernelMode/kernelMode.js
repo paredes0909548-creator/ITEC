@@ -18,8 +18,8 @@ export default class kernelMode{
 
 deductStock(productId, qty) {
     const target = this.#item.find(item => item.productID === productId);
-    if (target && target.quantity >= qty) {
-        target.quantity -= qty;
+    if (target && target.stocks >= qty) {
+        target.stocks -= qty;
     }
 }
 }

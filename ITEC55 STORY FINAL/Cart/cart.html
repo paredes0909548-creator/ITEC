@@ -3,40 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart</title>
+
+    <link rel="stylesheet" href="../index.css">
     <link rel="stylesheet" href="cart.css">
-    <script src="https://kit.fontawesome.com/7af71ec812.js" crossorigin="anonymous"></script>
+
+    <script src="https://kit.fontawesome.com/7af71ec812.js"
+    crossorigin="anonymous"></script>
+
+    <title>Cart | (NAME) MERCH</title>
 </head>
+
 <body>
+
     <div class="interfaceWrapper" id="userInterface">
+
+        <!-- EXISTING NAVBAR -->
         <nav class="navBar">
-           <div class="navBrand">[ (NAME) MERCH ]</div>
-              <ul class="navLinks">
+
+            <div class="navBrand">[ (NAME) MERCH ]</div>
+
+            <ul class="navLinks">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="about.html">Catalog</a></li>
-                <li><a href="contact.html">Collections</a></li>
-                <li><a href="about.html">About</a></li>
-              </ul>
+                <li><a href="../about.html">Catalog</a></li>
+                <li><a href="../contact.html">Collections</a></li>
+                <li><a href="../about.html">About</a></li>
+            </ul>
 
             <div class="navActions">
-              <input type="text" placeholder="⌕ Search item..." class="searchBar">
 
-              <a class="cartBtn" href="cart.html"aria-label="Cart">
-                <img src="../images/cart.png" alt="cartIcon">
-              </a>
+                <input type="text"
+                    placeholder="⌕ Search item..."
+                    class="searchBar">
 
-              <button class="profBtn" type="button" id="profBtn"><i class="fa-regular fa-user"></i></button>
-              <button class="modeToggleButton" id="modeToggleButton" target="_self">User Mode</button>
+                <a class="cartBtn" href="cart.html" aria-label="Cart">
+                    <img src="../images/cart.png" alt="cartIcon">
+                </a>
+
+                <button class="profBtn" type="button" id="profBtn">
+                    <i class="fa-regular fa-user"></i>
+                </button>
+
+                <button class="modeToggleButton"
+                    id="modeToggleButton"
+                    target="_self">
+                    User Mode
+                </button>
+
             </div>
         </nav>
 
-      <div class="cartContainer" id="cartInterface">
-        <div class="cartTitle">
-          <h1>Shopping Cart</h1>
-          <div class="productsContainer" id="productsContainer">
-            <!-- Dito na lalabas yung mga items gamit javascript? -->
-          </div>
-        </div>
-      </div>
+
+        <!-- SHOPPING CART -->
+        <main class="cartContainer" id="cartInterface">
+
+            <header class="cartTitle">
+                <h1>Shopping Cart</h1>
+                <p>Review your selected items before checkout.</p>
+            </header>
+
+
+            <div class="cartLayout">
+
+                <!-- PRODUCTS SECTION -->
+                <section class="cartItemsSection">
+
+                    <div class="cartSectionHeader">
+                        <h2>Your Items</h2>
+                        <span>Selected Items</span>
+                    </div>
+
+                    <div class="productsContainer" id="productsContainer">
+
+                        <!-- Dito lalabas yung cart items gamit JavaScript -->
+
+                    </div>
+
+                    <a href="../index.html" class="continueShoppingBtn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Continue Shopping
+                    </a>
+
+                </section>
+
+
+                <!-- ORDER SUMMARY -->
+                <aside class="orderSummary">
+
+                    <h2>Order Summary</h2>
+
+                    <div class="summaryRow">
+                        <span>Subtotal</span>
+                        <span>₱0.00</span>
+                    </div>
+
+                    <div class="summaryRow">
+                        <span>Shipping</span>
+                        <span>Calculated at checkout</span>
+                    </div>
+
+                    <hr>
+
+                    <div class="summaryTotal">
+                        <span>Total</span>
+                        <span>₱0.00</span>
+                    </div>
+
+                    <button class="checkoutBtn" type="button">
+                        Proceed to Checkout
+                    </button>
+
+                    <p class="secureNote">
+                        <i class="fa-solid fa-lock"></i>
+                        Secure and easy checkout
+                    </p>
+
+                </aside>
+
+            </div>
+
+        </main>
+
+    </div>
+
 </body>
 </html>

@@ -68,3 +68,148 @@ body {
   height: 50px;
   border-radius: 50%;
 }
+
+.cartContainer {
+    background: #ebddc0;
+    min-height: 100vh;
+    padding: 40px 5%;
+    color: #382b22;
+}
+
+.cartTitle {
+    margin-bottom: 30px;
+}
+
+.cartTitle h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.cartTitle p {
+    color: #78685b;
+    font-size: 15px;
+}
+
+.cartLayout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.cartItemsSection,
+.orderSummary {
+    background: #fffaf1;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.cartSectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.cartSectionHeader h2,
+.orderSummary h2 {
+    font-size: 24px;
+}
+
+.cartSectionHeader span {
+    color: #806d5d;
+    font-size: 14px;
+}
+
+.productsContainer {
+    min-height: 180px;
+    border-top: 1px solid #e5d9ca;
+    border-bottom: 1px solid #e5d9ca;
+}
+
+.continueShoppingBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-top: 25px;
+    padding: 13px 22px;
+
+    border: 1px solid #6e5340;
+    border-radius: 30px;
+
+    color: #6e5340;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.orderSummary h2 {
+    margin-bottom: 30px;
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 22px;
+    font-size: 15px;
+}
+
+.summaryRow span:last-child {
+    text-align: right;
+}
+
+.orderSummary hr {
+    border: none;
+    border-top: 1px solid #dfd1bf;
+    margin: 25px 0;
+}
+
+.summaryTotal {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.checkoutBtn {
+    width: 100%;
+    padding: 16px;
+
+    background: #6e5340;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.checkoutBtn:hover {
+    background: #503b2d;
+}
+
+.secureNote {
+    text-align: center;
+    color: #88796a;
+    font-size: 13px;
+    margin-top: 18px;
+}
+
+.secureNote i {
+    margin-right: 7px;
+}
+
+@media (max-width: 768px) {
+
+    .cartLayout {
+        grid-template-columns: 1fr;
+    }
+
+    .cartContainer {
+        padding: 30px 4%;
+    }
+
+}
