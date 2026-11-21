@@ -3,7 +3,13 @@ static #cartList= [];
     
 
     static addToCart(itemObj){
-        this.#cartList.push(itemObj);
+        if(itemObj){
+            this.#cartList.push(itemObj);
+        }
+        else{
+            return ;
+        }
+        
     }
 
     static showCartList(){
