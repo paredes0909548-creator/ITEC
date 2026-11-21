@@ -7,6 +7,9 @@ static stockChecker(productId, quantity) {
     const productInfos = this.#kernel.productInfo();
     const product = productInfos[productId - 1];
 
+    if(qty ==""){
+        return console.log('Specify the quantity');
+    }
     // Kernel validation: reject tampered IDs, 0/negative quantities, or low stock
     if (!product || qty <= 0 || product.stocks < qty) {
         return; // Returns undefined if invalid or out of stock

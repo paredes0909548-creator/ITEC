@@ -1,13 +1,14 @@
 export default class cart{
-static #cartList= [];
+static #cartList= []; /* i think you need to save this in local storage to have a permanent shit */
     
 
     static addToCart(itemObj){
         if(itemObj){
             this.#cartList.push(itemObj);
+            console.log(this.#cartList);
         }
         else{
-            return ;
+            return console.log("stock unavailable");
         }
         
     }
@@ -15,6 +16,24 @@ static #cartList= [];
     static showCartList(){
         return this.#cartList;
     }
-} 
 
-const cartList = cart.showCartList();
+    static renderCart(){
+        console.log("heloo");
+        console.log(this.#cartList);
+    const container = document.getElementById('productsContainer');
+
+    if(!container){
+        return;
+    }
+
+    const cartBlock = this.#cartList.map(item =>{
+    
+        return `<img src="./images/clothes${item.productId}.jpg" alt="clothes${item.productId}" class="productImage">`;
+    }).join('');
+
+        container.innerHTML = cartBlock;
+
+    }
+}
+console.log('hel');
+cart.renderCart();

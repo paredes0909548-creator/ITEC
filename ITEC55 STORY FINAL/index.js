@@ -59,6 +59,8 @@ productInterfaceOptions.addEventListener('click', (e) => {
     const finalProductId = rawId.replace("final", "");
 
     const stockCheckerResult = systemCall.stockChecker(finalProductId,quantity);
+    console.log(stockCheckerResult);
+    console.log('asdn');
     cart.addToCart(stockCheckerResult);
     
 });
