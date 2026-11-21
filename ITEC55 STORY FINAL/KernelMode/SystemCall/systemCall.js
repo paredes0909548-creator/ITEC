@@ -1,22 +1,22 @@
 import kernelMode from "../kernelMode.js";
 export default class systemCall{
-    #items=[];
+    static #kernel = new kernelMode();
 
+static stockChecker(productId, quantity) {
+    const qty = Number(quantity);
+    const productInfos = this.#kernel.productInfo();
+    const product = productInfos[productId - 1];
 
-    static itemChecker(productId,quantity){
-    const productInfos = kernel.productInfo();
-    /* kailangan ko iloop para mag match yung Product id ng item and yung roduct id nung pinili ni customer and by that ma chcheck ko na if yung quantity nung product inside kernel is greater than the user wants okay tandaan mo yan ASHLEY *Note to self ito */
-
-    const itemStock = productInfos[productId-1].stocks;
-    if(itemStock < itemAddedToCart){
-        return "Item Out of Stock";
+    // Kernel validation: reject tampered IDs, 0/negative quantities, or low stock
+    if (!product || qty <= 0 || product.stocks < qty) {
+        return; // Returns undefined if invalid or out of stock
     }
-    else{
-        const itemOrderInfo= {
-        productID:productId,
-        quantity:quantity,
-    }
-}
+
+    return{
+        productID: productId,
+        quantity: qty,
+        status:"item added to cart succefully"
+    };
 }
 
 

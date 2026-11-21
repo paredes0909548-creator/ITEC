@@ -1,7 +1,9 @@
 import userObj from "./KernelMode/SystemCall/userObj.js";
 import systemCall from "./KernelMode/SystemCall/systemCall.js";
+import cart from "./Cart/cart.js";
 
 const userObjs = new userObj();
+
 const modeToggleButton = document.getElementById('modeToggleButton');
 
 const profBtn = document.getElementById('profBtn');
@@ -26,7 +28,6 @@ const imgContainerProductInterface = document.getElementById('imgContainerProduc
 const productInterfaceOptions = document.getElementById('productInterfaceOptions');
 
 const addToCartBtn = document.querySelectorAll('.addToCartBtn');
-const quantity = document.getElementById('itemQuantity').valueAsNumber;
 
 const productInterfaceCloseBtn = document.querySelector('.productInterfaceCloseBtn');
 
@@ -40,14 +41,27 @@ addToCartBtn.forEach(button => {
         productInterfaceOptions.innerHTML = `
             <input type="color">
             <input type="number" min="1" max="99" id="itemQuantity">
-            <button class="productInterfaceAddToCartBtn" type="button" data-product-id="${productId}" >Add to Cart</button>
-            `
-        systemCall.itemChecker(productId,quantity);            
-        
-
+            <button class="productInterfaceAddToCartBtn" type="button" data-final-product-id="final${productId}" >Add to Cart</button>
+            `        
     })
 });
 
+productInterfaceOptions.addEventListener('click', (e) => {
+    // Check if the clicked element is the new Add to Cart button
+    const finalBtn = e.target.closest('.productInterfaceAddToCartBtn');
+    if (!finalBtn) return; // Ignore clicks on the color or number inputs
+
+    e.preventDefault();
+
+    const quantity = document.getElementById('itemQuantity').value;
+
+    const rawId = finalBtn.dataset.finalProductId; // Matches data-final-product-id
+    const finalProductId = rawId.replace("final", "");
+
+    const stockCheckerResult = systemCall.stockChecker(finalProductId,quantity);
+    cart.addToCart(stockCheckerResult);
+    
+});
 productInterfaceCloseBtn.addEventListener('click', (e)=>{
     productInterface.classList.remove('active');
 })
