@@ -98,7 +98,21 @@ body {
     align-items: start;
 }
 
-
+.productContainerItem{
+    display: flex;
+    justify-content: space-between;
+    border: solid black;
+}
+.checkBox{
+ display: none;   
+}
+.cartProductDeleteBtn svg{
+    fill: #97786c;
+}
+.cartProductDeleteBtn svg:hover{
+    cursor: pointer;
+    fill: #b8a78f;
+}
 /*---------------------Summary SECTION---------------------*/
 .cartItemsSection,
 .orderSummary {

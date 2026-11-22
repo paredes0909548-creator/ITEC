@@ -29,10 +29,6 @@ export default class cart{
         this.saveToCart(cart);
     }
 
-    static showCartList(){
-        return JSON.parse(localStorage.getItem('Cart'))||[];
-    }
-
     static renderCart(){
     const container = document.getElementById('productsContainer');
 
@@ -44,34 +40,37 @@ export default class cart{
         return;
     }
 
-    const cartBlock = this.showCartList().map(item =>{
+    const cartBlock = this.getCart().map(item =>{
         return `
         <div class="productContainerItem">
+            <div class="productContainerItemChild">
+                <img src="../images/clothes${item.productId}.jpg" alt="clothes${item.productId}" class="productImage">
+                <input type="color">
+                <span id="itemQuantityCart">Quantity: ${item.quantity}</span>
+             </div>
 
-            <label for="cartProductDeleteBtn${item.productId}" class="cartProductDeleteBtn">
+                <label for="cartProductDeleteBtn${item.productId}" class="cartProductDeleteBtn">
 
-                <input class="checkBox" type="checkbox" id="cartProductDeleteBtn${item.productId}">
+                    <input class="checkBox" type="checkbox" class="checkBox" id="cartProductDeleteBtn${item.productId}" data-product-id="${item.productId}">
 
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
-                    <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
-                </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" ">
+                        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+                    </svg>
 
-            </label>
 
-            <img src="../images/clothes${item.productId}.jpg" alt="clothes${item.productId}" class="productImage">
-            <input type="color">
-            <span id="itemQuantityCart">Quantity: ${item.quantity}</span>
+                </label>
+    
         </div>
         `;
     }).join('');
         container.innerHTML = cartBlock;
         
-    const subTotal = this.showCartList().reduce((sum,item) => {
+    const subTotal = this.getCart().reduce((sum,item) => {
         const itemTotal = Number(item.price) * Number(item.quantity)
         return sum+itemTotal;
     },0)
     console.log(subTotal);
-    console.log(this.showCartList());
+    console.log(this.getCart());
     const shippingFee = 70;
     const finalTotal = subTotal + shippingFee;
 
@@ -81,5 +80,36 @@ export default class cart{
     
 
     }
+
+    static initCartEvents() {
+    const container = document.getElementById('productsContainer');
+    if (!container) return; // Prevents errors if this script runs on pages without #productsContainer
+    
+    container.addEventListener('change', (e) => {
+        if (e.target.classList.contains('checkBox')) {
+            const productId = e.target.dataset.productId;
+            
+            // 1. Get the cart array first
+            const cart = this.getCart();
+            
+            // 2. Find the index of the matching item
+            const index = cart.findIndex((item) => String(item.productId) === String(productId));
+            
+            // 3. If found, remove it, save the updated array, and refresh the screen
+            if (index !== -1) {
+                cart.splice(index, 1);
+                this.saveToCart(cart);
+                this.renderCart();
+            }
+        }
+    });
+    }
+
+    
+
+
+
+    
 }
 cart.renderCart();
+cart.initCartEvents();
