@@ -52,17 +52,22 @@ productInterfaceOptions.addEventListener('click', (e) => {
     if (!finalBtn) return; // Ignore clicks on the color or number inputs
 
     e.preventDefault();
-
-    const quantity = document.getElementById('itemQuantity').value;
-
     const rawId = finalBtn.dataset.finalProductId; // Matches data-final-product-id
+    
+    const quantity = document.getElementById('itemQuantity').value;
     const finalProductId = rawId.replace("final", "");
 
     const stockCheckerResult = systemCall.stockChecker(finalProductId,quantity);
-    if(stockCheckerResult){
-        localStorage.setItem();
+    const itemObj = new cart(finalProductId,quantity);
+    if(stockCheckerResult.valid){
+        cart.addToCart(itemObj);
+        console.log(stockCheckerResult.message);
     }
-    
+    else{
+        console.log(stockCheckerResult.message);
+        cart.showCartList();
+    }
+
 });
 productInterfaceCloseBtn.addEventListener('click', (e)=>{
     productInterface.classList.remove('active');

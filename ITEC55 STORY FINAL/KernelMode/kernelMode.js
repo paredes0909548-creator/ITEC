@@ -1,9 +1,9 @@
 export default class kernelMode{
 
 #item =[
-{productID: 1, stocks: 20, price:10},
-{productID:2, stocks:35, price:20},
-{productID:3, stocks:10, price:30}
+{productId: 1, stocks: 20, price:10},
+{productId:2, stocks:35, price:20},
+{productId:3, stocks:10, price:30}
 ];
 
 #process =[];
@@ -16,11 +16,12 @@ export default class kernelMode{
     this.#process.push(processObj);
   }
 
-deductStock(productId, qty) {
-    const target = this.#item.find(item => item.productID === productId);
-    if (target && target.stocks >= qty) {
+ deductStock(productId, qty) {
+    const target = this.#item.find(item => item.productId === Number(productId));
+    if (target && target.stocks >= Number(qty)) {
         target.stocks -= qty;
     }
+
 }
 }
 
@@ -44,8 +45,6 @@ modeToggleButton.addEventListener('click', ()=>{
     window.location.replace('../index.html');
 });
 document.addEventListener('DOMContentLoaded', () => {
-      const kernel = new kernelMode();
-
     const optionButtons = document.querySelectorAll('.optionButton');
     const childInterfaces = document.querySelectorAll('.childInterface');
 

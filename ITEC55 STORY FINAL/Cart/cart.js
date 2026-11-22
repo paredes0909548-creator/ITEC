@@ -1,20 +1,17 @@
 export default class cart{
-static #cartList= localStorage.getItem('cart'); /* i think you need to save this in local storage to have a permanent shit */
-    
+    constructor(productId,quantity){
+        this.productId = productId;
+        this.quantity = quantity;
+    }
 
     static addToCart(itemObj){
-        if(itemObj){
-            this.#cartList.push(itemObj);
-            console.log(this.#cartList);
-        }
-        else{
-            return console.log("stock unavailable");
-        }
-        
+        const cart = JSON.parse(localStorage.getItem('Cart')) ||[];
+        cart.push(itemObj);
+        localStorage.setItem('Cart',JSON.stringify(cart))
     }
 
     static showCartList(){
-        return this.#cartList;
+        return JSON.parse(localStorage.getItem('Cart'))||[];
     }
 
     static renderCart(){
@@ -25,7 +22,7 @@ static #cartList= localStorage.getItem('cart'); /* i think you need to save this
         return;
     }
 
-    const cartBlock = this.#cartList.map(item =>{
+    const cartBlock = this.showCartList().map(item =>{
     
         return `<img src="./images/clothes${item.productId}.jpg" alt="clothes${item.productId}" class="productImage">`;
     }).join('');
