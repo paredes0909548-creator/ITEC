@@ -67,7 +67,68 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+const CART_STORAGE_KEY = 'productStoreItem';
 
+const logOutput = document.getElementById('kernelLogOutput');
+const clearLogBtn = document.getElementById('clearLogBtn');
+const navTabs = document.querySelectorAll('.optionButton');
+const tabPanels = document.querySelectorAll('.tabPanel');
 
+function getTimestamp() {
+    return new Date().toLocaleTimeString([], { hour12: false });
+}
+
+function writeKernelLog(tag, message) {
+    if (!logOutput) return;
+
+    const line = document.createElement('div');
+    line.className = 'logLine';
+    line.innerHTML = `<span class="logTime">[${getTimestamp()}]</span><span class="logTag">[${tag}]</span><span>${message}</span>`;
+
+    logOutput.appendChild(line);
+    logOutput.scrollTop = logOutput.scrollHeight;
+}
+
+function readStoredCartItems() {
+    try {
+        const rawCart = localStorage.getItem(CART_STORAGE_KEY);
+        return rawCart ? JSON.parse(rawCart) : [];
+    } catch {
+        writeKernelLog('WARN', `Failed to parse "${CART_STORAGE_KEY}" from localStorage`);
+        return [];
+    }
+}
+
+// Sidebar navigation switching + logging
+navTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const targetId = tab.dataset.target;
+        if (!targetId) return;
+
+        navTabs.forEach(btn => btn.classList.toggle('active', btn === tab));
+
+        tabPanels.forEach(panel => {
+            panel.classList.toggle('active', panel.id === targetId);
+        });
+
+        writeKernelLog('NAV', `Switched active view to "${targetId}"`);
+
+        if (targetId === 'cart' || targetId === 'tab-cart' || targetId.toLowerCase().includes('cart')) {
+            const parsedCart = readStoredCartItems();
+            writeKernelLog('CART_MEM', `Loaded ${parsedCart.length} item(s) from localStorage`);
+        }
+    });
+});
+
+clearLogBtn?.addEventListener('click', () => {
+    if (logOutput) logOutput.innerHTML = '';
+    writeKernelLog('SYS', 'Kernel log cleared');
+});
+
+// Initial boot logs when kernel.html opens
+document.addEventListener('DOMContentLoaded', () => {
+    writeKernelLog('BOOT', 'Kernel Mode initialized');
+    writeKernelLog('ENV', 'Runtime: HTML/CSS/JS | DB target: MySQL');
+});
 
 
