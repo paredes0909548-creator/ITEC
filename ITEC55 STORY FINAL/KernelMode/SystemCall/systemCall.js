@@ -19,7 +19,7 @@ console.log(product);
     if (!product || qty <= 0 || product.stocks < qty) {
         return {valid: false , message: "Product Out Of Stock" }; // Returns undefined if invalid or out of stock
     }
-    return {valid:true, message: "add to cart Succeful;"};
+    return {valid:true, message: "add to cart Succeful;", price:product.price};
 }
 
 
