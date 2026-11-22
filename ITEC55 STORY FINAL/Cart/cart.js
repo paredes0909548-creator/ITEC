@@ -24,7 +24,12 @@ export default class cart{
 
     const cartBlock = this.showCartList().map(item =>{
     
-        return `<img src="../images/clothes${item.productId}.jpg" alt="clothes${item.productId}" class="productImage">`;
+        return `
+        <div>
+            <img src="../images/clothes${item.productId}.jpg" alt="clothes${item.productId}" class="productImage">
+            
+        </div>
+        `;
     }).join('');
 
         container.innerHTML = cartBlock;
