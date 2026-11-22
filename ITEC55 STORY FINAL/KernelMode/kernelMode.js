@@ -99,7 +99,7 @@ function readStoredCartItems() {
     }
 }
 
-// Sidebar navigation switching + logging
+// SIDEBAR NAVS
 navTabs.forEach(tab => {
     tab.addEventListener('click', () => {
         const targetId = tab.dataset.target;
@@ -125,7 +125,7 @@ clearLogBtn?.addEventListener('click', () => {
     writeKernelLog('SYS', 'Kernel log cleared');
 });
 
-// Initial boot logs when kernel.html opens
+// ALREADY LOADED WHEN SWITCHED TO KERNEL MODE
 document.addEventListener('DOMContentLoaded', () => {
     writeKernelLog('BOOT', 'Kernel Mode initialized');
     writeKernelLog('ENV', 'Runtime: HTML/CSS/JS | DB target: MySQL');
