@@ -22,13 +22,14 @@
             <li><button type="button" class="optionButton" data-target="accountInterface">    Account    </button></li>
             <li><button type="button" class="optionButton" data-target="transactionInterface">Transaction</button></li>
             <li><button type="button" class="optionButton" data-target="cartInterface">       Cart       </button></li>
-            <li><button type="button" class="optionButton" data-target="historyInterface">    history    </button></li>
+            <li><button type="button" class="optionButton" data-target="historyInterface">    History    </button></li>
+            <button type="button" class="optionButton" data-target="kernelLogInterface">Kernel Log</button>
         </ul>
     </nav>
 
     <div class="interface">
         
-        <div class="childInterface" id="accountInterface">
+        <div class="childInterface active" id="accountInterface">
             <ul>
                 <li>Name:                <span id="userName"></span></li>
                 <li>Country:             <span id="country"></span></li>
@@ -64,6 +65,17 @@
             
         <div class="childInterface" id="historyInterface">
 
+        </div>
+
+
+        <div class="tabPanel" id="kernelLogInterface">
+            <section id="tabKernelLog">
+            <div class="logToolbar">
+                <span class="kernelLogTxt">KERNEL LOG STREAM</span>
+                <button type="button" id="clearLogBtn">Clear Log</button>
+            </div>
+            <div id="kernelLogOutput" class="kernelLogBox"></div>
+        </section>
         </div>
 
     </div>

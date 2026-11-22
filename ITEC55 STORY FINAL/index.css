@@ -480,3 +480,18 @@ body {
 #kernelInterface{
   display: none;
 }
+
+.modeToggleButton {
+  background-color:#d1c9b1;
+  font-size: 1.05rem;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 13px;
+  text-align: center;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.modeToggleButton:hover {
+  transform: scale(1.08);
+  background-color:#ebddc0;
+}

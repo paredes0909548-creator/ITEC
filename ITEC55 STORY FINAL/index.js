@@ -73,3 +73,4 @@ productInterfaceCloseBtn.addEventListener('click', (e)=>{
     productInterface.classList.remove('active');
 })
 
+
