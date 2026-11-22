@@ -1,5 +1,5 @@
 export default class cart{
-static #cartList= []; /* i think you need to save this in local storage to have a permanent shit */
+static #cartList= localStorage.getItem('cart'); /* i think you need to save this in local storage to have a permanent shit */
     
 
     static addToCart(itemObj){
@@ -18,8 +18,7 @@ static #cartList= []; /* i think you need to save this in local storage to have 
     }
 
     static renderCart(){
-        console.log("heloo");
-        console.log(this.#cartList);
+        
     const container = document.getElementById('productsContainer');
 
     if(!container){
@@ -35,5 +34,4 @@ static #cartList= []; /* i think you need to save this in local storage to have 
 
     }
 }
-console.log('hel');
 cart.renderCart();

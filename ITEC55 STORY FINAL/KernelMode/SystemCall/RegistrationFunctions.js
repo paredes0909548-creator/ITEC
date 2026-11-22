@@ -50,6 +50,7 @@ export default class RegistrationFunction{
 /* Registration logics*/
  static registration(userFormRegistration){
     const userObjMaker = new userObj();
+    
     userFormRegistration.addEventListener('submit', async(e) =>{
         e.preventDefault();
         const p = document.querySelector('#registrationStatus');
