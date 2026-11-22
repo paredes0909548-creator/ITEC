@@ -5,21 +5,17 @@ export default class systemCall{
 static stockChecker(productId, quantity) {
     const qty = Number(quantity);
     const productInfos = this.#kernel.productInfo();
-    const product = productInfos[productId - 1];
+    const product = productInfos.find(item => item.id === Number(productId));
 
     if(qty ==""){
         return console.log('Specify the quantity');
     }
     // Kernel validation: reject tampered IDs, 0/negative quantities, or low stock
     if (!product || qty <= 0 || product.stocks < qty) {
-        return; // Returns undefined if invalid or out of stock
+        return false; // Returns undefined if invalid or out of stock
     }
 
-    return{
-        productID: productId,
-        quantity: qty,
-        status:"item added to cart succefully"
-    };
+    return true;
 }
 
 
