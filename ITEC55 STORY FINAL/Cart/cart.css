@@ -126,6 +126,9 @@ body {
     border-top: 1px solid #e5d9ca;
     border-bottom: 1px solid #e5d9ca;
 }
+.productImage{
+    height: 300px; width: 200px;
+}
 
 .continueShoppingBtn {
     display: inline-flex;

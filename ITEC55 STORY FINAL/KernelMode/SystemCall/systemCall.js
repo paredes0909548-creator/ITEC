@@ -18,9 +18,7 @@ console.log(product);
     // Kernel validation: reject tampered IDs, 0/negative quantities, or low stock
     if (!product || qty <= 0 || product.stocks < qty) {
         return {valid: false , message: "Product Out Of Stock" }; // Returns undefined if invalid or out of stock
-        
     }
-    this.#kernel.deductStock(productId,qty);
     return {valid:true, message: "add to cart Succeful;"};
 }
 
