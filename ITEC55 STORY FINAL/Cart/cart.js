@@ -1,3 +1,4 @@
+import systemCall from "../KernelMode/SystemCall/systemCall";
 export default class cart{
     constructor(productId,quantity,price){
         this.productId = productId;
@@ -104,12 +105,13 @@ export default class cart{
         }
     });
     }
-
-    
-
-
-
-    
 }
 cart.renderCart();
 cart.initCartEvents();
+
+const checkOutBtn =  document.getElementById('checkOutBtn');
+
+checkOutBtn.addEventListener('click', (e)=>{
+const cartList = cart.getCart();
+console.log(cartList);
+})

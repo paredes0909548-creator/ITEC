@@ -23,21 +23,20 @@ console.log(product);
 }
 
 
-    static processObj(CID,PID, state, priority, arrival, burst, remaining, time, registers){
-        
-        const process = {
-            CID:CID,
-            PID:PID,
-            state:state,
-            priority:priority,
-            arrival:arrival,
-            burst:burst,
-            remaining:remaining,
-            time:time,
-            registers:registers
-        }
-
-        return process;
+static processObj(CID,PID, state, priority, arrival, burst, remaining, time, registers){
+    
+    const process = {
+        cid:CID,
+        pid:PID,
+        state:state,
+        priority:priority,
+        arrival:arrival,
+        burst:burst,
+        remaining:remaining,
+        time:time,
+        registers:registers
     }
+    return process;
+}
 }
 
