@@ -1,4 +1,4 @@
-import cartCore from "../Cart/cartCore";
+import cartCore from "../Cart/cartCore.js";
 const modeToggleButton = document.getElementById('modeToggleButton');
 
 modeToggleButton.addEventListener('click', ()=>{
@@ -98,12 +98,11 @@ const cartInterface = document.getElementById('cartInterface');
 const cartInfo = cartList.map((item) => {
 return`
 <div class="cartInfo" id="cartInfo">
-<span>${customerId}</span>
-<span>${item.productId}</span>
-<span>${item.quantity}</span>
-<span>${item.price}</span>
+<span>CustomerId: ${customerId}</span>
+<span>ProductId: ${item.productId}</span>
+<span>Quantity: ${item.quantity}</span>
+<span>Price: ${item.price}</span>
 </div>
 `;
 }).join('');
-
-cartInterface.innerHTML=cartInfo;
+cartInterface.innerHTML = cartInfo;

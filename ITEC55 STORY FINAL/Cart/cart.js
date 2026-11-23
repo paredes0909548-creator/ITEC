@@ -1,4 +1,4 @@
-import cartCore from "./cartCore";
+import cartCore from "./cartCore.js";
 
 cartCore.renderCart();
 cartCore.initCartEvents();
