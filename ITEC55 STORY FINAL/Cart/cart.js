@@ -1,4 +1,3 @@
-import systemCall from "../KernelMode/SystemCall/systemCall";
 export default class cart{
     constructor(productId,quantity,price){
         this.productId = productId;
@@ -47,7 +46,7 @@ export default class cart{
             <div class="productContainerItemChild">
                 <img src="../images/clothes${item.productId}.jpg" alt="clothes${item.productId}" class="productImage">
                 <input type="color">
-                <span id="itemQuantityCart">Quantity: ${item.quantity}</span>
+                <span class="itemQuantityCart">Quantity: ${item.quantity}</span>
              </div>
 
                 <label for="cartProductDeleteBtn${item.productId}" class="cartProductDeleteBtn">
@@ -76,8 +75,14 @@ export default class cart{
     const finalTotal = subTotal + shippingFee;
 
     subTotalDisplay.textContent = subTotal;
-    shippingFeeDisplay.textContent = shippingFee;
-    finalTotalDisplay.textContent = finalTotal;
+    if(subTotal > 0){
+        shippingFeeDisplay.textContent="₱"+shippingFee;
+        finalTotalDisplay.textContent = "₱"+finalTotal;
+    }
+    else{
+    shippingFeeDisplay.textContent="₱0";
+    finalTotalDisplay.textContent = "₱0"; 
+    }
     
 
     }
@@ -110,8 +115,12 @@ cart.renderCart();
 cart.initCartEvents();
 
 const checkOutBtn =  document.getElementById('checkOutBtn');
-
+if(checkOutBtn){
 checkOutBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
 const cartList = cart.getCart();
 console.log(cartList);
+
+/* GAWIN MO NA YUNG CHECK OUT BALE PAG CLICK YUNG checkOutBtn variabl laman niyan is yung mga list ng add to cart na ilalagay mo dun sa array list ng process sa kernel */
 })
+}
