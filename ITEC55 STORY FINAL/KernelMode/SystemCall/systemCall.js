@@ -1,4 +1,4 @@
-import kernelModeCore from "./kernelModeCore";
+import kernelModeCore from "./kernelModeCore.js";
 export default class systemCall{
     static #kernel = new kernelModeCore();
 

@@ -49,15 +49,6 @@ body {
 ul{
     list-style: none;
 }
-
-
-.childInterface{
-    display: none;
-}
-.childInterface.active{
-    display: flex;
-}
-
 .modeToggleButton {
   background-color:#334155;
   font-size: 1.05rem;
@@ -75,15 +66,6 @@ ul{
   background-color:#0b1120;
 }
 
-
-/*Account Interface*/
-
-
-/*Transaction Interface*/
-.transactionProcess{
-    display: none;
-}
-
 .tabPanel {
     display: none;
 }
@@ -92,6 +74,13 @@ ul{
     display: block;
 }
 
+/*Account Interface*/
+
+
+/*Transaction Interface*/
+.transactionProcess{
+    display: none;
+}
 .logToolbar {
     display: flex;
     justify-content: space-between;
