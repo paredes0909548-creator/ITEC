@@ -75,4 +75,27 @@ productInterfaceCloseBtn.addEventListener('click', (e)=>{
     productInterface.classList.remove('active');
 })
 
+function updateClock() {
+  const clockEl = document.getElementById('liveClock');
+  if (!clockEl) return;
+
+  const now = new Date();
+  clockEl.textContent = now.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
+}
+
+updateClock(); // Run immediately so there's no 1-second delay on load
+setInterval(updateClock, 1000);
+
+clockEl.textContent = new Date().toLocaleString([], {
+  month: 'short',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: false // Set to true for 12-hour AM/PM
+});
 

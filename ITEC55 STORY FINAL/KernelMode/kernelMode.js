@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-const CART_STORAGE_KEY = 'cart';
+const CART_STORAGE_KEY = 'Cart';
 
 const logOutput = document.getElementById('kernelLogOutput');
 const clearLogBtn = document.getElementById('clearLogBtn');
@@ -52,11 +52,20 @@ function writeKernelLog(tag, message) {
 function readStoredCartItems() {
     try {
         const rawCart = localStorage.getItem(CART_STORAGE_KEY);
-        return rawCart ? JSON.parse(rawCart) : [];
+        const parsed = rawCart ? JSON.parse(rawCart) : [];
+        return Array.isArray(parsed) ? parsed : [];
     } catch {
         writeKernelLog('WARN', `Failed to parse "${CART_STORAGE_KEY}" from localStorage`);
         return [];
     }
+}
+
+function getCartQuantitySummary(items) {
+    const totalQuantity = items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
+    return {
+        lineCount: items.length,
+        totalQuantity
+    };
 }
 
 // SIDEBAR NAVS
@@ -77,6 +86,15 @@ navTabs.forEach(tab => {
             const parsedCart = readStoredCartItems();
             writeKernelLog('CART_MEM', `Loaded ${parsedCart.length} item(s) from localStorage`);
         }
+
+        function logCartQuantity(sourceTag = 'CART_MEM') {
+    const items = readStoredCartItems();
+    const { lineCount, totalQuantity } = getCartQuantitySummary(items);
+    writeKernelLog(
+        sourceTag,
+        `Cart quantity: ${totalQuantity} unit(s) across ${lineCount} item entry/entries`
+    );
+}
     });
 });
 
@@ -89,6 +107,21 @@ clearLogBtn?.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     writeKernelLog('BOOT', 'Kernel Mode initialized');
     writeKernelLog('ENV', 'Runtime: HTML/CSS/JS | DB target: MySQL');
+
+    function logCartQuantity(sourceTag = 'CART_MEM') {
+    const items = readStoredCartItems();
+    const { lineCount, totalQuantity } = getCartQuantitySummary(items);
+    writeKernelLog(
+        sourceTag,
+        `Cart quantity: ${totalQuantity} unit(s) across ${lineCount} item entry/entries`
+    );
+}
+});
+
+window.addEventListener('storage', (event) => {
+    if (event.key === CART_STORAGE_KEY) {
+        logCartQuantity('CART_SYNC');
+    }
 });
 
 const customerId = localStorage.getItem('userStatus');
