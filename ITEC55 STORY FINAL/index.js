@@ -67,7 +67,7 @@ productInterfaceOptions.addEventListener('click', (e) => {
     }
     else{
         console.log(stockCheckerResult.message);
-        cart.showCartList();
+        cart.getCart();
     }
 
 });

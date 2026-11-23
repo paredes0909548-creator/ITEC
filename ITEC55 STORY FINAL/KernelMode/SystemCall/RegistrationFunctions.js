@@ -48,19 +48,22 @@ export default class RegistrationFunction{
 }
 
 /* Registration logics*/
- static registration(userFormRegistration){
+ static registration(userFormRegistration,userFormLogin){
     const userObjMaker = new userObj();
     
     userFormRegistration.addEventListener('submit', async(e) =>{
         e.preventDefault();
-        const p = document.querySelector('#registrationStatus');
-        const userAccount= JSON.parse(localStorage.getItem('Accounts')) || [];
-        const incrementId = userAccount.length > 0 ? Math.max(...userAccount.map(user => user.customerId ||0)) + 1: 1; 
-        e.preventDefault();
-        
-    const username = document.getElementById('username').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
+    const p = document.querySelector('#registrationStatus');
+    const userAccount= JSON.parse(localStorage.getItem('Accounts')) || [];
+    const incrementId = userAccount.length > 0 ? Math.max(...userAccount.map(user => user.customerId ||0)) + 1: 1; 
+    
+    const usernameInput = document.getElementById('username');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+
+    const username = usernameInput.value.trim();
+    const email    = emailInput.value.trim();
+    const password = passwordInput.value.trim();
     
         if (username === "" || email === "" || password === ""){
             console.log("cannot be empty");
@@ -71,15 +74,27 @@ export default class RegistrationFunction{
         const customerInfo = userObjMaker.userObjCreator(username,email,password,incrementId);
             if(RegistrationFunction.userChecker(customerInfo.customerName)){
                 p.textContent='account already exist';
+
+                /* cliniclear neto yung fields */
+                usernameInput.value = "";
+                emailInput.value = "";
+                passwordInput.value = "";
                 return;
             }
             else{
                 p.textContent = 'Registration succeful';
                 const userAccount = JSON.parse(localStorage.getItem('Accounts')) || [];
-    
                 userAccount.push(customerInfo);
-                
                 localStorage.setItem('Accounts' , JSON.stringify(userAccount));
+
+
+                /* cliniclear neto yung fields */
+                usernameInput.value = "";
+                emailInput.value = "";
+                passwordInput.value = "";
+
+                userFormRegistration.classList.remove('active');
+                userFormLogin.classList.add('active');
                 return;
             }    
             
@@ -91,27 +106,36 @@ export default class RegistrationFunction{
     userFormLogin.addEventListener('submit' , async(e) =>{
         const p = document.querySelector('#loginStatus');
         e.preventDefault();
-        const userLoginInput = document.getElementById('userLoginInput').value.trim();
-        const passwordLoginInput = document.getElementById('passwordLoginInput').value.trim();
+        const userLoginInput = document.getElementById('userLoginInput');
+        const passwordLoginInput = document.getElementById('passwordLoginInput');
+
+        const usernameLogin = userLoginInput.value.trim();
+        const passwordLogin = passwordLoginInput.value.trim();
     
-        if(userLoginInput ==="" || passwordLoginInput ===""){
+        if(usernameLogin ==="" || passwordLogin ===""){
             console.log("field cannot be empty");
             p.textContent = "field cannot be empty";
             return;
         }
-        const loginAccount = RegistrationFunction.loginChecker(userLoginInput,passwordLoginInput);
+        const loginAccount = RegistrationFunction.loginChecker(usernameLogin,passwordLogin);
         if(loginAccount !== null){
             localStorage.setItem('userStatus', loginAccount.customerId);
             p.textContent = 'Login Succefully';
             userFormLogin.classList.remove('active');
             RegistrationFunction.intialUi(userFormRegistration,formWrapper,userFormAddress,userInfo);
         }
+        else{
+            console.log("create an account first");
+            p.textContent ="create an account first";
+            userLoginInput.value ="";
+            passwordLoginInput.value ="";
+        }
         
     })
  }
 
 /* Address logics*/
-static addressLogic(userFormAddress,addressInput,userFormRegistration,formWrapper,userInfo){
+static addressLogic(userFormAddress,addressInput,userFormRegistration,formWrapper,userInfo){    
 
 userFormAddress.addEventListener('submit', async(event) =>{
 event.preventDefault();
@@ -126,10 +150,11 @@ const city_municipality = document.getElementById('city_municipality').value.tri
 const province = document.getElementById('province').value.trim();
 const postal_zip = document.getElementById('postal_zip').value.trim();
 
-if(addressInput.value.trim() === ""){
-    p.textContent ="Field Cannot be empty";
-    return;
-}
+const hasEmptyField = Array.from(addressInput).some(input => input.value.trim() === "");
+    if (hasEmptyField) {
+        p.textContent = "Fill every field";
+        return;
+    }
 
 const userName = localStorage.getItem('userStatus');
 
@@ -141,9 +166,9 @@ const account = userAccounts.find(user => user.customerId == userName);
 const userAddress = userObjMaker.userAddress(account.customerId, unitNum, streetName, barangay, city_municipality, province, postal_zip);
 
 console.log(userAddress);
-const userAdressList = JSON.parse(localStorage.getItem('Address')) || [];
-userAdressList.push(userAddress);
-localStorage.setItem('Address', JSON.stringify(userAdressList));
+const userAddressList = JSON.parse(localStorage.getItem('Address')) || [];
+userAddressList.push(userAddress);
+localStorage.setItem('Address', JSON.stringify(userAddressList));
 RegistrationFunction.intialUi(userFormRegistration,formWrapper,userFormAddress,userInfo);
 })
 }

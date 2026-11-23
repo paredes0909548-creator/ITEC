@@ -1,24 +1,31 @@
-import kernelMode from "../kernelMode.js";
+import kernelModeCore from "./kernelModeCore";
 export default class systemCall{
-    static #kernel = new kernelMode();
+    static #kernel = new kernelModeCore();
 
 static stockChecker(productId, quantity) {
     const userStatus = localStorage.getItem('userStatus');
-    if(!userStatus || userStatus === "guess"){
+    if(!userStatus || userStatus === 'guess'){
         return {valid: false , message: "LogIn First" };
     }
 
+    if(quantity === null || quantity === undefined || String(quantity).trim() === ""){
+      return { valid: false, message: "Specify the quantity" };
+    }
     const qty = Number(quantity);
+    if (!Number.isInteger(qty) || qty <= 0) {
+      return { valid: false, message: "Invalid quantity" };
+    }
+
+
     const productInfos = this.#kernel.productInfo();
     const product = productInfos.find(item => item.productId === Number(productId));
-console.log(product);
-    if(qty ==""){
-        return {valid: false , message: "Specify the quantity" };
-    }
+    console.log(product);
+
     // Kernel validation: reject tampered IDs, 0/negative quantities, or low stock
     if (!product || qty <= 0 || product.stocks < qty) {
-        return {valid: false , message: "Product Out Of Stock" }; // Returns undefined if invalid or out of stock
+        return {valid: false , message: "Product Out Of Stock" }; // Returns undefined if invalid and out of stock
     }
+
     return {valid:true, message: "add to cart Succeful;", price:product.price};
 }
 

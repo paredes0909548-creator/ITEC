@@ -16,7 +16,7 @@ const loginButton = document.getElementById('loginButton');
 
 /* ADDRESS INFO */
 const userFormAddress = document.getElementById('userFormAddress');
-const addressInput = document.querySelector('.addressInput');
+const addressInput = document.querySelectorAll('.addressInput');
 
 /* USERINFO */
 const userInfo = document.getElementById('userInfo');
@@ -44,11 +44,12 @@ RegistrationFunction.intialUi(userFormRegistration,formWrapper,userFormAddress,u
 
 
 /* Registration logics*/
-RegistrationFunction.registration(userFormRegistration);
+RegistrationFunction.registration(userFormRegistration,userFormLogin);
 
 
 /* LOGIN LOGIC*/
 RegistrationFunction.login(userFormLogin,userFormRegistration,formWrapper,userFormAddress,userInfo);
+
 
 /* Address logics*/
 RegistrationFunction.addressLogic(userFormAddress,addressInput,userFormRegistration,formWrapper,userInfo);
