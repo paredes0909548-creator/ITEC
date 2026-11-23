@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-const CART_STORAGE_KEY = 'productStoreItem';
+const CART_STORAGE_KEY = 'cart';
 
 const logOutput = document.getElementById('kernelLogOutput');
 const clearLogBtn = document.getElementById('clearLogBtn');
