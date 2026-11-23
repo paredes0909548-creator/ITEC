@@ -1,3 +1,4 @@
+import cartCore from "../Cart/cartCore";
 const modeToggleButton = document.getElementById('modeToggleButton');
 
 modeToggleButton.addEventListener('click', ()=>{
@@ -90,4 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
     writeKernelLog('ENV', 'Runtime: HTML/CSS/JS | DB target: MySQL');
 });
 
+const customerId = localStorage.getItem('userStatus');
+const cartList = cartCore.getCart();
+const cartInterface = document.getElementById('cartInterface');
 
+const cartInfo = cartList.map((item) => {
+return`
+<div class="cartInfo" id="cartInfo">
+<span>${customerId}</span>
+<span>${item.productId}</span>
+<span>${item.quantity}</span>
+<span>${item.price}</span>
+</div>
+`;
+}).join('');
+
+cartInterface.innerHTML=cartInfo;

@@ -1,13 +1,15 @@
 import userObj from "./KernelMode/SystemCall/userObj.js";
 import systemCall from "./KernelMode/SystemCall/systemCall.js";
-import cart from "./Cart/cart.js";
-
+import cartCore from "./Cart/cartCore.js";
 const userObjs = new userObj();
 
 const modeToggleButton = document.getElementById('modeToggleButton');
 
 const profBtn = document.getElementById('profBtn');
 
+if(!localStorage.getItem('mode')){
+        localStorage.setItem('mode', 1);
+}
 
 modeToggleButton.addEventListener('click',(e)=>{
 e.preventDefault();
@@ -58,16 +60,14 @@ productInterfaceOptions.addEventListener('click', (e) => {
     const finalProductId = rawId.replace("final", "");
 
     const stockCheckerResult = systemCall.stockChecker(finalProductId,quantity);
-    const itemObj = new cart(finalProductId,quantity,stockCheckerResult.price);
-    console.log(itemObj);
+    const itemObj = new cartCore(finalProductId,quantity,stockCheckerResult.price);
 
     if(stockCheckerResult.valid){
-        cart.addToCart(itemObj);
+        cartCore.addToCart(itemObj);
         console.log(stockCheckerResult.message);
     }
     else{
         console.log(stockCheckerResult.message);
-        cart.getCart();
     }
 
 });
