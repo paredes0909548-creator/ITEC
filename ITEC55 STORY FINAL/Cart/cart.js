@@ -1,23 +1,43 @@
+import systemCall from "../KernelMode/SystemCall/systemCall.js";
 import cartCore from "./cartCore.js";
 
-const modeToggleButton = document.getElementById('modeToggleButton');
+systemCall.storeTime();
 
-modeToggleButton.addEventListener('click',(e)=>{
-e.preventDefault();
-localStorage.setItem('mode', 3);
-window.location.replace('../KernelMode/kernelMode.html');
-})
+const modeToggleButton = document.getElementById('modeToggleButton');
+modeToggleButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  localStorage.setItem('mode', 3); // Switch to Kernel Mode
+  window.location.replace('../KernelMode/kernelMode.html');
+});
 
 cartCore.renderCart();
 cartCore.initCartEvents();
 
-const checkOutBtn =  document.getElementById('checkOutBtn');
-if(checkOutBtn){
-checkOutBtn.addEventListener('click', (e)=>{
+const checkOutBtn = document.getElementById('checkOutBtn');
+if (checkOutBtn) {
+  checkOutBtn.addEventListener('click', (e) => {
     e.preventDefault();
-const cartList = cart.getCart();
-console.log(cartList);
 
-/* GAWIN MO NA YUNG CHECK OUT BALE PAG CLICK YUNG checkOutBtn variabl laman niyan is yung mga list ng add to cart na ilalagay mo dun sa array list ng process sa kernel */
-})
+    const cartList = systemCall.getCart();
+    const CID = localStorage.getItem('userStatus');
+    
+    // Optional: Let user pick "Express Shipping" (Priority 1) vs "Standard" (Priority 3) in UI
+    const prioritySelect = document.getElementById('shippingPriority'); 
+    const priority = prioritySelect ? Number(prioritySelect.value) : 2;
+
+    // Invoke System Call
+    const result = systemCall.checkOutRequest(CID, cartList, priority);
+
+    if (result.valid) {
+      alert(result.message);
+      cartCore.saveToCart([]); // Clear User Mode cart
+      cartCore.renderCart();   // Update UI
+      
+      // Optional: Redirect directly to Kernel Mode to watch the CPU schedule this order
+      // localStorage.setItem('mode', 3);
+      // window.location.replace('../KernelMode/kernelMode.html');
+    } else {
+      alert(result.message);
+    }
+  });
 }

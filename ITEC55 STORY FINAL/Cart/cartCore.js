@@ -1,4 +1,6 @@
+import systemCall from "../KernelMode/SystemCall/systemCall.js";
 export default class cartCore{
+    static #storeClock=0;
     constructor(productId,quantity,price){
         this.productId = productId;
         this.quantity = quantity;
@@ -14,6 +16,8 @@ export default class cartCore{
     }
     
     static addToCart(itemObj){
+        systemCall.storeTime();
+
         const cart = this.getCart();
         const existingProductId = cart.find((item) => ( item.productId === itemObj.productId))
      
@@ -109,5 +113,9 @@ export default class cartCore{
             }
         }
     });
+    }
+
+    static checkOutHandler(){
+    
     }
 }
