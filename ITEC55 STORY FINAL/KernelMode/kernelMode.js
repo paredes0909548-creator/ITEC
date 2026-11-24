@@ -1,4 +1,5 @@
 import cartCore from "../Cart/cartCore.js";
+import systemCall from "./SystemCall/systemCall.js";
 const modeToggleButton = document.getElementById('modeToggleButton');
 
 modeToggleButton.addEventListener('click', ()=>{
@@ -124,6 +125,8 @@ window.addEventListener('storage', (event) => {
     }
 });
 
+
+/*Cart DISPLAYER */
 const customerId = localStorage.getItem('userStatus');
 const cartList = cartCore.getCart();
 const cartInterface = document.getElementById('cartInterface');
@@ -139,3 +142,103 @@ return`
 `;
 }).join('');
 cartInterface.innerHTML = cartInfo;
+
+/* TRANSACTION DISPLAYER */
+const transactionInterface = document.getElementById('transactionInterface');
+const transaction = systemCall.getProcess();
+const processList = transaction.map((item)=>{
+return `<hr>
+        <ul class="transactionProcess">
+            <li>arrival:        ${item.arrival}</li>
+            <li>burst:          ${item.burst}</li>
+            <li>cid:            ${item.cid}</li>
+            <li>parentPid:      ${item.parentPid}</li>
+            <li>pid:            ${item.pid}</li>
+            <li>priority:       ${item.priority}</li>
+            
+            <ul>registers:${
+                `<li>-ACC:${item.registers.ACC}</li>
+                <li>-PC :${item.registers.PC} </li>
+                <li>-SP :${item.registers.SP} </li>`}
+            </ul>
+            
+            <li>remaining:      ${item.remaining}</li>
+            <li>responseTime:   ${item.responseTime}</li>
+            <ul>sharedResources:
+                <li>-Memory:       ${item.sharedResources.memoryAddressSpace}</li>
+                <li>-Shipping Fee: ${item.sharedResources.shippingFee}</li>
+                <li>-Cart Items:   ${item.sharedResources.cartItems.map(c => 
+                                                                        `<br>--Product #${c.productId} (x${c.quantity})`).join(', ')}</li>
+            </ul>
+            <li>state:          ${item.state}</li>
+            <li>storyTitle:     ${item.storyTitle}</li>
+            
+            <ul>threads:      ${item.threads.map(thread => `
+                                                            <li>-burst:           ${thread.burst}</li>
+                                                            <li>-parentPid:       ${thread.parentPid}</li>
+                                                            <li>-privateResources:${thread.privateResources}</li>
+                                                            <li>-remaining:       ${thread.remaining}</li>
+                                                            <li>-state:           ${thread.state}</li>
+                                                            <li>-taskName:        ${thread.taskName}</li>
+                                                            <li>-tid:             ${thread.tid}</li>
+                                                            `).join('')}
+            </ul>
+
+            <li>turnaroundTime: ${item.turnaroundTime}</li>
+            <li>waitingTime:    ${item.waitingTime}</li>
+        </ul>
+        <hr>`
+        
+
+}).join('');
+transactionInterface.innerHTML=processList;
+
+/* HISTORY DISPLAYER */
+const historyInterface = document.getElementById('historyInterface');
+const historyList = systemCall.getHistory();
+const history = historyList.map((item)=>{
+return `<hr>
+        <ul>
+            <ul>inventory:${item.inventory.map(item=> `<li>-ProductId:${item.productId}</li>
+                                                       <li>-ProductName${item.name}</li>
+                                                       <li>-Stocks:${item.stocks}</li>
+                                                       <li>-Price${item.price}</li>`).join('')}
+            </ul>
+                
+            <ul>kerneLog:${item.kernelLog.map(kernelLog=> `<li>-EventType${kernelLog.eventType}</li>
+                                                           <li>-message${kernelLog.message}</li>
+                                                           <li>-mode${kernelLog.mode}</li>
+                                                           <li>-tick${kernelLog.tick}</li>
+                                                           <li>-WhyReason${kernelLog.whyReason}</li>`).join('')}
+            </ul>
+         
+            <li>label:${item.label}</li>
+            <ul>ProcessQueue:${(item.processQueue || []).map(proc => `
+                <li>
+                      <strong>-PID #${proc.pid}</strong> — ${proc.storyTitle} [${proc.state}]
+                    <ul>
+                        <li>--CID: ${proc.cid} | Parent PID: ${proc.parentPid ?? 'None'} | Priority: ${proc.priority}</li>
+                        <li>--Arrival: ${proc.arrival} | Burst: ${proc.burst} | Remaining: ${proc.remaining}</li>
+                        <li>--Waiting: ${proc.waitingTime} | Turnaround: ${proc.turnaroundTime} | Response: ${proc.responseTime ?? 'Pending'}</li>
+                        <li>--Registers: PC=${proc.registers.PC}, SP=${proc.registers.SP}, ACC=${proc.registers.ACC}</li>
+                        <li>--Shared Resources: Memory=${proc.sharedResources.memoryAddressSpace}, Shipping=₱${proc.sharedResources.shippingFee}</li>
+                        <li>--Threads (${proc.threads?.length || 0}):
+
+                            <ul>
+                            ${(proc.threads || []).map(t => `
+                              <li>
+                                TID #${t.tid}: ${t.taskName} — State: ${t.state} | Burst: ${t.remaining}/${t.burst} | SP: ${t.privateResources.stackPointer}
+                              </li>`).join('')}
+                            </ul>
+                        </li>
+                    </ul>
+                </li>`).join('')}
+            </ul>
+        
+            <li>${item.tick}</li>
+        </ul>
+        <hr>
+       `
+
+}).join('');
+historyInterface.innerHTML=history;

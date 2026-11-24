@@ -76,4 +76,17 @@ export default class systemCall {
       pcb
     };
   }
+
+  static getProcess(){
+  const processList = JSON.parse(localStorage.getItem('ProcessQueue'));
+  return processList;
+  }
+
+  static getHistory(){
+  const historyList= JSON.parse(localStorage.getItem('TimeMachineHistory'));
+  return historyList;
+  }
+
+
+
 }

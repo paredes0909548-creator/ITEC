@@ -78,9 +78,7 @@ ul{
 
 
 /*Transaction Interface*/
-.transactionProcess{
-    display: none;
-}
+
 .logToolbar {
     display: flex;
     justify-content: space-between;
