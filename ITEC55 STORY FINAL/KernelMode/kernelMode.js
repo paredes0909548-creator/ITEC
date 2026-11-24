@@ -143,6 +143,7 @@ return`
 }).join('');
 cartInterface.innerHTML = cartInfo;
 
+
 /* TRANSACTION DISPLAYER */
 const transactionInterface = document.getElementById('transactionInterface');
 const transaction = systemCall.getProcess();
@@ -188,10 +189,10 @@ return `<hr>
             <li>waitingTime:    ${item.waitingTime}</li>
         </ul>
         <hr>`
-        
-
 }).join('');
 transactionInterface.innerHTML=processList;
+
+
 
 /* HISTORY DISPLAYER */
 const historyInterface = document.getElementById('historyInterface');
