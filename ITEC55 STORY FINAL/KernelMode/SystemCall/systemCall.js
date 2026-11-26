@@ -7,6 +7,7 @@ export default class systemCall {
     const userStatus = localStorage.getItem('userStatus');
     if (!userStatus || userStatus === 'guess') {
       return { valid: false, message: "LogIn First" };
+      window.location.replace('/UserInfo/userAccount.html');
     }
 
     const qty = Number(quantity);
