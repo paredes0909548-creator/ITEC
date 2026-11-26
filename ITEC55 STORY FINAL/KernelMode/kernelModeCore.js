@@ -101,7 +101,7 @@ export default class kernelModeCore {
       arrival: arrival,
       burst: totalBurst,
       remaining: totalBurst,
-      waitingTime: 0,
+      waitingTime: 0, 
       turnaroundTime: 0,
       responseTime: null,
       // Shared Process Resources (accessible by all threads in this PCB):

@@ -1,4 +1,4 @@
-import kernelModeCore from "./kernelModeCore.js";
+import kernelModeCore from "../kernelModeCore.js";
 
 export default class systemCall {
   static #kernel = new kernelModeCore();
@@ -50,6 +50,7 @@ export default class systemCall {
 
     // 2. Atomic Stock Verification (All-or-Nothing)
     const inventory = this.#kernel.productInfo();
+    
     for (const item of cartList) {
       const stockRecord = inventory.find(p => p.productId === Number(item.productId));
       if (!stockRecord || stockRecord.stocks < Number(item.quantity)) {

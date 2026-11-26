@@ -115,7 +115,4 @@ export default class cartCore{
     });
     }
 
-    static checkOutHandler(){
-    
-    }
 }

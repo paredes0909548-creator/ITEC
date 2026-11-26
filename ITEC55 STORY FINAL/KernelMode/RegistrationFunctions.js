@@ -1,4 +1,4 @@
-import userObj from "./userObj.js";
+import userObj from "./SystemCall/userObj.js";
 export default class RegistrationFunction{
    static userChecker(usernameToCheck){
 

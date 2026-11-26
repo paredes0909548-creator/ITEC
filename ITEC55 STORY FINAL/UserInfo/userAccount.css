@@ -8,20 +8,18 @@
     --coffee-color:#6F4E37;
 }
 body{
-<<<<<<< Updated upstream
+
 background-image:  linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(../images/backgroundImage.jpg);
 background-repeat: no-repeat;
 background-size:cover;
 background-position: center;
 min-height: 100vh;
 overflow: auto;
-=======
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-image:  linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(../images/backgroundImage.jpg);
     background-repeat: no-repeat;
     background-size:cover;
     background-position: center;
->>>>>>> Stashed changes
 }
 .navBar {
   display: flex;

@@ -48,6 +48,7 @@ addToCartBtn.forEach(button => {
     })
 });
 
+/* THIS IS THE FINAL BUTTON WHERE THE USER ACTION WILL BE VALIDATED IF IT IS ALLOWED */
 productInterfaceOptions.addEventListener('click', (e) => {
     // Check if the clicked element is the new Add to Cart button
     const finalBtn = e.target.closest('.productInterfaceAddToCartBtn');
