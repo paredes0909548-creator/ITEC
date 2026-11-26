@@ -76,17 +76,6 @@ productInterfaceCloseBtn.addEventListener('click', (e)=>{
     productInterface.classList.remove('active');
 })
 
-function updateClock() {
-  const clockEl = document.getElementById('liveClock');
-  if (!clockEl) return;
-
-  const now = new Date();
-  clockEl.textContent = now.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  });
-}
 
 
 

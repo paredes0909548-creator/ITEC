@@ -16,7 +16,7 @@ export default class cartCore{
     }
     
     static addToCart(itemObj){
-        systemCall.storeTime();
+        systemCall.storeTime();/* This Starts the timer tick */
 
         const cart = this.getCart();
         const existingProductId = cart.find((item) => ( item.productId === itemObj.productId))
