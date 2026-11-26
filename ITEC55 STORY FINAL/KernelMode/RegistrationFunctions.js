@@ -23,7 +23,7 @@ export default class RegistrationFunction{
     }
 
     const userStatus = localStorage.getItem('userStatus');
-
+    const addressStatus = localStorage.getItem('addressStatus');
             /* Check if it is guess mode or not */
     if(userStatus.trim() === "guess"){
         userFormRegistration.classList.add('active'); /* This shows the registration initially */
@@ -169,8 +169,19 @@ console.log(userAddress);
 const userAddressList = JSON.parse(localStorage.getItem('Address')) || [];
 userAddressList.push(userAddress);
 localStorage.setItem('Address', JSON.stringify(userAddressList));
+localStorage.setItem('addressStatus','1');
 RegistrationFunction.intialUi(userFormRegistration,formWrapper,userFormAddress,userInfo);
 })
 }
 
+static signout(signout){
+
+    signout.addEventListener('click',(e)=>{
+        e.preventDefault();
+        localStorage.setItem('userStatus', 'guess');
+        localStorage.setItem('addressStatus', '0');
+        window.location.reload();
+    })
+
+}
 }

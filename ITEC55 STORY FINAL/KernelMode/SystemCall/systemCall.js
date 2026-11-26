@@ -5,7 +5,8 @@ export default class systemCall {
 
   static stockChecker(productId, quantity) {
     const userStatus = localStorage.getItem('userStatus');
-    if (!userStatus || userStatus === 'guess') {
+    const addressStatus = localStorage.getItem('addressStatus');
+    if (!userStatus || userStatus === 'guess' ||!addressStatus || addressStatus=== 0) {
       return { valid: false, message: "LogIn First" };
       window.location.replace('/UserInfo/userAccount.html');
     }

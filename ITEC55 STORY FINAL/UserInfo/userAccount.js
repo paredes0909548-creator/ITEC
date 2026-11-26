@@ -21,6 +21,8 @@ const addressInput = document.querySelectorAll('.addressInput');
 /* USERINFO */
 const userInfo = document.getElementById('userInfo');
 
+/* SignOut */
+const signout = document.getElementById('signOutButton');
 let id =0;
 
 
@@ -54,4 +56,6 @@ RegistrationFunction.login(userFormLogin,userFormRegistration,formWrapper,userFo
 /* Address logics*/
 RegistrationFunction.addressLogic(userFormAddress,addressInput,userFormRegistration,formWrapper,userInfo);
 
+/* SignOutLogic */
+RegistrationFunction.signout(signout);
 
