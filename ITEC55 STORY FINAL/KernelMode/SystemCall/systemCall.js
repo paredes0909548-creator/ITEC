@@ -7,8 +7,9 @@ export default class systemCall {
     const userStatus = localStorage.getItem('userStatus');
     const addressStatus = localStorage.getItem('addressStatus');
     if (!userStatus || userStatus === 'guess' ||!addressStatus || addressStatus=== 0) {
+      alert("LogInFirst");
+      window.location.replace('./UserInfo/userAccount.html');
       return { valid: false, message: "LogIn First" };
-      window.location.replace('/UserInfo/userAccount.html');
     }
 
     const qty = Number(quantity);
