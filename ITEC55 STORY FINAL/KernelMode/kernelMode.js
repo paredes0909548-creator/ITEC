@@ -243,3 +243,16 @@ return `<hr>
 
 }).join('');
 historyInterface.innerHTML=history;
+
+
+/* ADDING TO CART AND CHECKINGOUT KERNEL LOG */
+const cart = JSON.parse(localStorage.getItem('Cart')) || [];
+const processQueue = JSON.parse(localStorage.getItem('processQueue')) || [];
+if(cart.length > 0){
+    writeKernelLog("Cart","ITEM ADDED TO CART");
+}
+if(cart.length <0){
+    writeKernelLog("CART","ITEM REMOVED TO CART")
+}
+
+

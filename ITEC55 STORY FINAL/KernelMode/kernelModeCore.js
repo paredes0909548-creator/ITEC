@@ -373,115 +373,165 @@ static ganchartSimulator() {
   const processQueue = JSON.parse(localStorage.getItem('ProcessQueue')) || [];
   if (processQueue.length === 0) return;
 
+  const STATES = {
+    NEW: 'New',
+    READY: 'Ready',
+    RUNNING: 'Running',
+    WAITING: 'Waiting',
+    TERMINATED: 'Terminated',
+  };
+
   // Helper to calculate Average Waiting Time & Average Turnaround Time
   const getAverages = (list) => {
     const totalWT = list.reduce((sum, p) => sum + p.WT, 0);
     const totalTAT = list.reduce((sum, p) => sum + p.TAT, 0);
     return {
       AWT: Number((totalWT / list.length).toFixed(2)),
-      ATAT: Number((totalTAT / list.length).toFixed(2))
+      ATAT: Number((totalTAT / list.length).toFixed(2)),
     };
+  };
+
+  // Helper to create a 5-state lifecycle tracker per algorithm run
+  const createLifecycleTracker = (processes) => {
+    const events = [];
+    const currentState = {};
+
+    const transition = (pid, nextState, time, reason = '') => {
+      const prevState = currentState[pid] || null;
+      if (prevState === nextState) return;
+      currentState[pid] = nextState;
+      events.push({
+        pid,
+        time,
+        from: prevState,
+        to: nextState,
+        state: nextState,
+        reason,
+      });
+    };
+
+    // All submitted processes start in New and move to Ready at their arrival time
+    const sortedByArrival = [...processes].sort((a, b) => a.arrival - b.arrival);
+    for (const p of sortedByArrival) {
+      transition(p.pid, STATES.NEW, 0, 'Process created in queue');
+      transition(p.pid, STATES.READY, p.arrival, `Arrived at t=${p.arrival}`);
+    }
+
+    const getSummary = () => {
+      events.sort((a, b) => a.time - b.time || String(a.pid).localeCompare(String(b.pid), undefined, { numeric: true }));
+      const byProcess = {};
+      for (const ev of events) {
+        if (!byProcess[ev.pid]) byProcess[ev.pid] = [];
+        byProcess[ev.pid].push(ev);
+      }
+      return { events, byProcess, finalStates: currentState };
+    };
+
+    return { transition, getSummary };
   };
 
   // ==========================================
   // 1. FIRST-COME, FIRST-SERVED (FCFS)
   // ==========================================
+  const fcfsTracker = createLifecycleTracker(processQueue);
   const fcfsSorted = [...processQueue].sort((a, b) => a.arrival - b.arrival);
   let fcfsTime = 0;
-
   const fcfsResult = fcfsSorted.map((p) => {
     const startTime = Math.max(fcfsTime, p.arrival);
     const CT = startTime + p.burst;
     const TAT = CT - p.arrival;
     const WT = TAT - p.burst;
-    fcfsTime = CT;
 
+    fcfsTracker.transition(p.pid, STATES.RUNNING, startTime, 'Dispatched to CPU (FCFS)');
+    fcfsTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
+
+    fcfsTime = CT;
     return { pid: p.pid, startTime, CT, burst: p.burst, TAT, WT };
   });
-
-  localStorage.setItem('FCFS', JSON.stringify({
-    gantt: fcfsResult,
-    metrics: fcfsResult,
-    ...getAverages(fcfsResult)
-  }));
+  localStorage.setItem(
+    'FCFS',
+    JSON.stringify({
+      gantt: fcfsResult,
+      metrics: fcfsResult,
+      ...getAverages(fcfsResult),
+      lifecycle: fcfsTracker.getSummary(),
+    })
+  );
 
   // ==========================================
   // 2. SHORTEST JOB FIRST (SJF - Non-Preemptive)
   // ==========================================
+  const sjfTracker = createLifecycleTracker(processQueue);
   let remainingSJF = [...processQueue];
   const sjfResult = [];
   let sjfTime = 0;
-
   while (remainingSJF.length > 0) {
     const available = remainingSJF.filter((p) => p.arrival <= sjfTime);
-
     if (available.length === 0) {
       sjfTime = Math.min(...remainingSJF.map((p) => p.arrival));
       continue;
     }
-
     available.sort((a, b) => a.burst - b.burst || a.arrival - b.arrival);
     const p = available[0];
-
     const startTime = sjfTime;
     const CT = startTime + p.burst;
     const TAT = CT - p.arrival;
     const WT = TAT - p.burst;
-    sjfTime = CT;
 
+    sjfTracker.transition(p.pid, STATES.RUNNING, startTime, `Dispatched to CPU (SJF burst=${p.burst})`);
+    sjfTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
+
+    sjfTime = CT;
     sjfResult.push({ pid: p.pid, startTime, CT, burst: p.burst, TAT, WT });
     remainingSJF = remainingSJF.filter((item) => item.pid !== p.pid);
   }
-
-  localStorage.setItem('SJF', JSON.stringify({
-    gantt: sjfResult,
-    metrics: sjfResult,
-    ...getAverages(sjfResult)
-  }));
+  localStorage.setItem(
+    'SJF',
+    JSON.stringify({
+      gantt: sjfResult,
+      metrics: sjfResult,
+      ...getAverages(sjfResult),
+      lifecycle: sjfTracker.getSummary(),
+    })
+  );
 
   // ==========================================
   // 3. PRIORITY SCHEDULING (Non-Preemptive)
   // ==========================================
+  const prioTracker = createLifecycleTracker(processQueue);
   let remainingPriority = [...processQueue];
   const priorityResult = [];
   let prioTime = 0;
-
   while (remainingPriority.length > 0) {
     const available = remainingPriority.filter((p) => p.arrival <= prioTime);
-
     if (available.length === 0) {
       prioTime = Math.min(...remainingPriority.map((p) => p.arrival));
       continue;
     }
-
     // Lower number = higher priority (e.g., 1 runs before 2)
     available.sort((a, b) => a.priority - b.priority || a.arrival - b.arrival);
     const p = available[0];
-
     const startTime = prioTime;
     const CT = startTime + p.burst;
     const TAT = CT - p.arrival;
     const WT = TAT - p.burst;
+
+    prioTracker.transition(p.pid, STATES.RUNNING, startTime, `Dispatched to CPU (Priority=${p.priority})`);
+    prioTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
+
     prioTime = CT;
-
-    priorityResult.push({
-      pid: p.pid,
-      priority: p.priority,
-      startTime,
-      CT,
-      burst: p.burst,
-      TAT,
-      WT
-    });
-
+    priorityResult.push({ pid: p.pid, priority: p.priority, startTime, CT, burst: p.burst, TAT, WT });
     remainingPriority = remainingPriority.filter((item) => item.pid !== p.pid);
   }
-
-  localStorage.setItem('Priority', JSON.stringify({
-    gantt: priorityResult,
-    metrics: priorityResult,
-    ...getAverages(priorityResult)
-  }));
+  localStorage.setItem(
+    'Priority',
+    JSON.stringify({
+      gantt: priorityResult,
+      metrics: priorityResult,
+      ...getAverages(priorityResult),
+      lifecycle: prioTracker.getSummary(),
+    })
+  );
 
   // ==========================================
   // 4. ROUND ROBIN (RR)
@@ -489,12 +539,11 @@ static ganchartSimulator() {
   if (typeof this.quantumTimeSwitch === 'function') {
     this.quantumTimeSwitch();
   }
-
   const quantum = Number(localStorage.getItem('quantumTime')) || 2;
+  const rrTracker = createLifecycleTracker(processQueue);
   const rrQueue = [...processQueue]
     .sort((a, b) => a.arrival - b.arrival)
     .map((p) => ({ ...p, remainingBurst: p.burst }));
-
   const readyQueue = [];
   const rrGantt = [];
   const rrMetrics = [];
@@ -517,9 +566,10 @@ static ganchartSimulator() {
     const execTime = Math.min(current.remainingBurst, quantum);
     const startTime = rrTime;
 
+    rrTracker.transition(current.pid, STATES.RUNNING, startTime, `Dispatched to CPU (RR q=${quantum})`);
+
     rrTime += execTime;
     current.remainingBurst -= execTime;
-
     rrGantt.push({ pid: current.pid, startTime, CT: rrTime });
 
     while (idx < rrQueue.length && rrQueue[idx].arrival <= rrTime) {
@@ -527,22 +577,30 @@ static ganchartSimulator() {
     }
 
     if (current.remainingBurst > 0) {
+      // Preempted after quantum: moves through Waiting/context-switch back to Ready
+      rrTracker.transition(current.pid, STATES.WAITING, rrTime, 'Time quantum expired (context switch)');
+      rrTracker.transition(current.pid, STATES.READY, rrTime, 'Re-queued in Ready queue');
       readyQueue.push(current);
     } else {
       const CT = rrTime;
       const TAT = CT - current.arrival;
       const WT = TAT - current.burst;
+      rrTracker.transition(current.pid, STATES.TERMINATED, CT, 'Burst completed');
       rrMetrics.push({ pid: current.pid, CT, burst: current.burst, TAT, WT });
     }
   }
 
   // Sort RR metrics back by PID order for clean table display
   rrMetrics.sort((a, b) => String(a.pid).localeCompare(String(b.pid), undefined, { numeric: true }));
-
-  localStorage.setItem('RoundRobin', JSON.stringify({
-    gantt: rrGantt,
-    metrics: rrMetrics,
-    ...getAverages(rrMetrics)
-  }));
+  localStorage.setItem(
+    'RoundRobin',
+    JSON.stringify({
+      gantt: rrGantt,
+      metrics: rrMetrics,
+      ...getAverages(rrMetrics),
+      lifecycle: rrTracker.getSummary(),
+    })
+  );
 }
+
 }
