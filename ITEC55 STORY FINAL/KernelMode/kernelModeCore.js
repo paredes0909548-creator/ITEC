@@ -148,22 +148,6 @@ export default class kernelModeCore {
     return Number(localStorage.getItem('clockTime')) || this.#storeClock;
   }
 
-  static stopClock() {
-    clearInterval(this.#clockInterval);
-    this.#clockInterval = null;
-  }
-  static quantumTimeSwitch(){
-
-    this.#quantumTime = setInterval(() => {
-      this.#quantumTime;
-      localStorage.setItem('quantumTime', this.#quantumTime);
-
-      if(localStorage.getItem('quantumtime' == 2)){
-        this.#quantumTime = 0;
-      }
-    }, 2000);
-  }
-  
 
   deductStock(productId, qty) {
     const target = this.#item.find(item => item.productId === Number(productId));
@@ -536,9 +520,7 @@ static ganchartSimulator() {
   // ==========================================
   // 4. ROUND ROBIN (RR)
   // ==========================================
-  if (typeof this.quantumTimeSwitch === 'function') {
-    this.quantumTimeSwitch();
-  }
+  
   const quantum = Number(localStorage.getItem('quantumTime')) || 2;
   const rrTracker = createLifecycleTracker(processQueue);
   const rrQueue = [...processQueue]
