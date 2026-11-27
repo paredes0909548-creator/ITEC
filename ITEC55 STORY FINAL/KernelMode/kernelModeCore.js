@@ -161,7 +161,7 @@ export default class kernelModeCore {
 
 
   
-static roundRobin(){
+static roundRobin(createLifecycleTracker,processQueue,STATES,getAverages){
   
 const quantum = Number(localStorage.getItem('quantumTime')) || 2;
   const rrTracker = createLifecycleTracker(processQueue);
@@ -194,7 +194,13 @@ const quantum = Number(localStorage.getItem('quantumTime')) || 2;
 
     rrTime += execTime;
     current.remainingBurst -= execTime;
-    rrGantt.push({ pid: current.pid, startTime, CT: rrTime });
+    rrGantt.push({ 
+      pid: current.pid, 
+      startTime, 
+      CT: rrTime, 
+      burst: current.burst, 
+      TAT, 
+      WT});
 
     while (idx < rrQueue.length && rrQueue[idx].arrival <= rrTime) {
       readyQueue.push(rrQueue[idx++]);
@@ -210,7 +216,14 @@ const quantum = Number(localStorage.getItem('quantumTime')) || 2;
       const TAT = CT - current.arrival;
       const WT = TAT - current.burst;
       rrTracker.transition(current.pid, STATES.TERMINATED, CT, 'Burst completed');
-      rrMetrics.push({ pid: current.pid, CT, burst: current.burst, TAT, WT });
+      rrMetrics.push({ 
+        pid: current.pid, 
+        CT, 
+        burst: current.burst, 
+        TAT, 
+        WT 
+
+      });
     }
   }
 
@@ -228,7 +241,7 @@ const quantum = Number(localStorage.getItem('quantumTime')) || 2;
 
 }
 
-static highestPriority(){
+static highestPriority(createLifecycleTracker,processQueue,STATES,getAverages){
 const prioTracker = createLifecycleTracker(processQueue);
   let remainingPriority = [...processQueue];
   const priorityResult = [];
@@ -266,7 +279,7 @@ const prioTracker = createLifecycleTracker(processQueue);
 
 }
 
-static SJF(){
+static SJF(createLifecycleTracker,processQueue,STATES,getAverages){
 const sjfTracker = createLifecycleTracker(processQueue);
   let remainingSJF = [...processQueue];
   const sjfResult = [];
@@ -303,7 +316,7 @@ const sjfTracker = createLifecycleTracker(processQueue);
 
 }
 
-static FCFS(){
+static FCFS(createLifecycleTracker,processQueue,STATES,getAverages){
 const fcfsTracker = createLifecycleTracker(processQueue);
   const fcfsSorted = [...processQueue].sort((a, b) => a.arrival - b.arrival);
   let fcfsTime = 0;
@@ -397,20 +410,20 @@ static ganchartSimulator() {
   // ==========================================
   // 1. FIRST-COME, FIRST-SERVED (FCFS)
   // ==========================================
-  this.FCFS();
+  this.FCFS(createLifecycleTracker,processQueue,STATES,getAverages);
   
   // ==========================================
   // 2. SHORTEST JOB FIRST (SJF - Non-Preemptive)
   // ==========================================
-  this.SJF();
+  this.SJF(createLifecycleTracker,processQueue,STATES,getAverages);
   // ==========================================
   // 3. PRIORITY SCHEDULING (Non-Preemptive)
   // ==========================================
-  this.highestPriority();
+  this.highestPriority(createLifecycleTracker,processQueue,STATES,getAverages);
   // ==========================================
   // 4. ROUND ROBIN (RR)
   // ==========================================
-  this.roundRobin();
+  this.roundRobin(createLifecycleTracker,processQueue,STATES,getAverages);
   }
 
 }
