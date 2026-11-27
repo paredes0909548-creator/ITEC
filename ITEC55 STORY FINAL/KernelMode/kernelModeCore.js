@@ -164,190 +164,170 @@ export default class kernelModeCore {
 static roundRobin(){
   
 const quantum = Number(localStorage.getItem('quantumTime')) || 2;
-const rrQueue = [...processQueue]
-  .sort((a, b) => a.arrival - b.arrival)
-  .map((p) => ({ ...p, remainingBurst: p.burst })); // Track remaining burst
+  const rrTracker = createLifecycleTracker(processQueue);
+  const rrQueue = [...processQueue]
+    .sort((a, b) => a.arrival - b.arrival)
+    .map((p) => ({ ...p, remainingBurst: p.burst }));
+  const readyQueue = [];
+  const rrGantt = [];
+  const rrMetrics = [];
+  let rrTime = 0;
+  let idx = 0;
 
-const readyQueue = [];
-const ganttSlices = []; // Stores every Gantt block
-const completedRR = []; // Stores final metrics per PID
+  while (idx < rrQueue.length && rrQueue[idx].arrival <= rrTime) {
+    readyQueue.push(rrQueue[idx++]);
+  }
 
-let rrTime = 0;
-let index = 0;
+  while (readyQueue.length > 0 || idx < rrQueue.length) {
+    if (readyQueue.length === 0) {
+      rrTime = rrQueue[idx].arrival;
+      while (idx < rrQueue.length && rrQueue[idx].arrival <= rrTime) {
+        readyQueue.push(rrQueue[idx++]);
+      }
+    }
 
-// Load initial processes arriving at time 0
-while (index < rrQueue.length && rrQueue[index].arrival <= rrTime) {
-  readyQueue.push(rrQueue[index++]);
-}
+    const current = readyQueue.shift();
+    const execTime = Math.min(current.remainingBurst, quantum);
+    const startTime = rrTime;
 
-while (readyQueue.length > 0 || index < rrQueue.length) {
-  if (readyQueue.length === 0) {
-    rrTime = rrQueue[index].arrival;
-    while (index < rrQueue.length && rrQueue[index].arrival <= rrTime) {
-      readyQueue.push(rrQueue[index++]);
+    rrTracker.transition(current.pid, STATES.RUNNING, startTime, `Dispatched to CPU (RR q=${quantum})`);
+
+    rrTime += execTime;
+    current.remainingBurst -= execTime;
+    rrGantt.push({ pid: current.pid, startTime, CT: rrTime });
+
+    while (idx < rrQueue.length && rrQueue[idx].arrival <= rrTime) {
+      readyQueue.push(rrQueue[idx++]);
+    }
+
+    if (current.remainingBurst > 0) {
+      // Preempted after quantum: moves through Waiting/context-switch back to Ready
+      rrTracker.transition(current.pid, STATES.WAITING, rrTime, 'Time quantum expired (context switch)');
+      rrTracker.transition(current.pid, STATES.READY, rrTime, 'Re-queued in Ready queue');
+      readyQueue.push(current);
+    } else {
+      const CT = rrTime;
+      const TAT = CT - current.arrival;
+      const WT = TAT - current.burst;
+      rrTracker.transition(current.pid, STATES.TERMINATED, CT, 'Burst completed');
+      rrMetrics.push({ pid: current.pid, CT, burst: current.burst, TAT, WT });
     }
   }
 
-  const current = readyQueue.shift();
-  const execTime = Math.min(current.remainingBurst, quantum);
-  const startTime = rrTime;
-
-  rrTime += execTime;
-  current.remainingBurst -= execTime;
-
-  // Record this slice for the Gantt Chart UI
-  ganttSlices.push({
-    pid: current.pid,
-    startTime,
-    endTime: rrTime
-  });
-
-  // Check if new processes arrived while this slice was running
-  while (index < rrQueue.length && rrQueue[index].arrival <= rrTime) {
-    readyQueue.push(rrQueue[index++]);
-  }
-
-  // If not finished, put back at the end of the queue
-  if (current.remainingBurst > 0) {
-    readyQueue.push(current);
-  } else {
-    const CT = rrTime;
-    const TAT = CT - current.arrival;
-    const WT = TAT - current.burst;
-
-    completedRR.push({
-      pid: current.pid,
-      CT,
-      burst: current.burst,
-      TAT,
-      WT
-    });
-  }
-}
-
-localStorage.setItem('RoundRobinGantt', JSON.stringify(ganttSlices));
-localStorage.setItem('RoundRobinMetrics', JSON.stringify(completedRR));
+  // Sort RR metrics back by PID order for clean table display
+  rrMetrics.sort((a, b) => String(a.pid).localeCompare(String(b.pid), undefined, { numeric: true }));
+  localStorage.setItem(
+    'RoundRobin',
+    JSON.stringify({
+      gantt: rrGantt,
+      metrics: rrMetrics,
+      ...getAverages(rrMetrics),
+      lifecycle: rrTracker.getSummary(),
+    })
+  );
 
 }
 
 static highestPriority(){
-  
-let remainingPriority = [...processQueue];
-const PriorityOrderExecution = [];
-let prioTime = 0;
-let prioTotalWT = 0;
+const prioTracker = createLifecycleTracker(processQueue);
+  let remainingPriority = [...processQueue];
+  const priorityResult = [];
+  let prioTime = 0;
+  while (remainingPriority.length > 0) {
+    const available = remainingPriority.filter((p) => p.arrival <= prioTime);
+    if (available.length === 0) {
+      prioTime = Math.min(...remainingPriority.map((p) => p.arrival));
+      continue;
+    }
+    // Lower number = higher priority (e.g., 1 runs before 2)
+    available.sort((a, b) => a.priority - b.priority || a.arrival - b.arrival);
+    const p = available[0];
+    const startTime = prioTime;
+    const CT = startTime + p.burst;
+    const TAT = CT - p.arrival;
+    const WT = TAT - p.burst;
 
-while (remainingPriority.length > 0) {
-  const available = remainingPriority.filter((p) => p.arrival <= prioTime);
+    prioTracker.transition(p.pid, STATES.RUNNING, startTime, `Dispatched to CPU (Priority=${p.priority})`);
+    prioTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
 
-  if (available.length === 0) {
-    prioTime = Math.min(...remainingPriority.map((p) => p.arrival));
-    continue;
+    prioTime = CT;
+    priorityResult.push({ pid: p.pid, priority: p.priority, startTime, CT, burst: p.burst, TAT, WT });
+    remainingPriority = remainingPriority.filter((item) => item.pid !== p.pid);
   }
-
-  // Sort by highest priority (lowest number first), then arrival time
-  available.sort((a, b) => a.priority - b.priority || a.arrival - b.arrival);
-  const p = available[0];
-
-  const startTime = prioTime;
-  const CT = startTime + p.burst;
-  const TAT = CT - p.arrival;
-  const WT = TAT - p.burst;
-
-  prioTime = CT;
-  prioTotalWT += WT;
-
-  PriorityOrderExecution.push({
-    pid: p.pid,
-    priority: p.priority,
-    startTime,
-    CT,
-    burst: p.burst,
-    TAT,
-    WT
-  });
-
-  remainingPriority = remainingPriority.filter((item) => item.pid !== p.pid);
-}
-
-localStorage.setItem('Priority', JSON.stringify(PriorityOrderExecution));
+  localStorage.setItem(
+    'Priority',
+    JSON.stringify({
+      gantt: priorityResult,
+      metrics: priorityResult,
+      ...getAverages(priorityResult),
+      lifecycle: prioTracker.getSummary(),
+    })
+  );
 
 }
 
 static SJF(){
-
-
-
+const sjfTracker = createLifecycleTracker(processQueue);
   let remainingSJF = [...processQueue];
-  const SJFOrderExecution = [];
+  const sjfResult = [];
   let sjfTime = 0;
-  let sjfTotalWT = 0;
-
-    while (remainingSJF.length > 0) {
-      // 1. Find all processes that have arrived by sjfTime
-      const available = remainingSJF.filter((p) => p.arrival <= sjfTime);
-
+  while (remainingSJF.length > 0) {
+    const available = remainingSJF.filter((p) => p.arrival <= sjfTime);
     if (available.length === 0) {
-      // CPU is idle; jump clock to the next arriving process
       sjfTime = Math.min(...remainingSJF.map((p) => p.arrival));
-        continue;
+      continue;
+    }
+    available.sort((a, b) => a.burst - b.burst || a.arrival - b.arrival);
+    const p = available[0];
+    const startTime = sjfTime;
+    const CT = startTime + p.burst;
+    const TAT = CT - p.arrival;
+    const WT = TAT - p.burst;
+
+    sjfTracker.transition(p.pid, STATES.RUNNING, startTime, `Dispatched to CPU (SJF burst=${p.burst})`);
+    sjfTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
+
+    sjfTime = CT;
+    sjfResult.push({ pid: p.pid, startTime, CT, burst: p.burst, TAT, WT });
+    remainingSJF = remainingSJF.filter((item) => item.pid !== p.pid);
   }
-
-  // 2. Pick the available process with the shortest burst time
-  available.sort((a, b) => a.burst - b.burst || a.arrival - b.arrival);
-  const p = available[0];
-
-  const startTime = sjfTime;
-  const CT = startTime + p.burst;
-  const TAT = CT - p.arrival;
-  const WT = TAT - p.burst;
-
-  sjfTime = CT;
-  sjfTotalWT += WT;
-
-  SJFOrderExecution.push({
-    pid: p.pid,
-    startTime,
-    CT,
-    burst: p.burst,
-    TAT,
-    WT
-  });
-
-  // 3. Remove completed process from remaining list
-  remainingSJF = remainingSJF.filter((item) => item.pid !== p.pid);
-}
-
-localStorage.setItem('SJF', JSON.stringify(SJFOrderExecution));
+  localStorage.setItem(
+    'SJF',
+    JSON.stringify({
+      gantt: sjfResult,
+      metrics: sjfResult,
+      ...getAverages(sjfResult),
+      lifecycle: sjfTracker.getSummary(),
+    })
+  );
 
 }
 
 static FCFS(){
-    const  processQueue = JSON.parse(localStorage.getItem('ProcessQueue')) || [];
-    const  FCFS         = JSON.parse(localStorage.getItem('FCFS'))         || [];
+const fcfsTracker = createLifecycleTracker(processQueue);
+  const fcfsSorted = [...processQueue].sort((a, b) => a.arrival - b.arrival);
+  let fcfsTime = 0;
+  const fcfsResult = fcfsSorted.map((p) => {
+    const startTime = Math.max(fcfsTime, p.arrival);
+    const CT = startTime + p.burst;
+    const TAT = CT - p.arrival;
+    const WT = TAT - p.burst;
 
-    const lastCompletionTime =0;
-    const totalWtBase = 0;
-    
-    const FCFSOrderExecution = FCFS.map((p)=>{
-      const startTime = lastCompletionTime+p.arrival;
-      const updatedCompletionTime =startTime + p.burst
-      const tat =updatedCompletionTime-p.arrival;
+    fcfsTracker.transition(p.pid, STATES.RUNNING, startTime, 'Dispatched to CPU (FCFS)');
+    fcfsTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
 
-      const totalWT = totalWtBase+ tat;
-      const finalWT = totalWT +tat;
-      return{
-        pid:p.pid,
-        CT:updatedCompletionTime,
-        burst:p.burst,
-        TAT:tat,
-        WT:tat-p.burst,
-        AWT:finalWT
-      }
-
+    fcfsTime = CT;
+    return { pid: p.pid, startTime, CT, burst: p.burst, TAT, WT };
+  });
+  localStorage.setItem(
+    'FCFS',
+    JSON.stringify({
+      gantt: fcfsResult,
+      metrics: fcfsResult,
+      ...getAverages(fcfsResult),
+      lifecycle: fcfsTracker.getSummary(),
     })
-    FCFS.push(FCFSOrderExecution);
-    localStorage.setItem('FCFS',JSON.stringify(processQueue))
+  );
 
 }
 
@@ -417,172 +397,20 @@ static ganchartSimulator() {
   // ==========================================
   // 1. FIRST-COME, FIRST-SERVED (FCFS)
   // ==========================================
-  const fcfsTracker = createLifecycleTracker(processQueue);
-  const fcfsSorted = [...processQueue].sort((a, b) => a.arrival - b.arrival);
-  let fcfsTime = 0;
-  const fcfsResult = fcfsSorted.map((p) => {
-    const startTime = Math.max(fcfsTime, p.arrival);
-    const CT = startTime + p.burst;
-    const TAT = CT - p.arrival;
-    const WT = TAT - p.burst;
-
-    fcfsTracker.transition(p.pid, STATES.RUNNING, startTime, 'Dispatched to CPU (FCFS)');
-    fcfsTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
-
-    fcfsTime = CT;
-    return { pid: p.pid, startTime, CT, burst: p.burst, TAT, WT };
-  });
-  localStorage.setItem(
-    'FCFS',
-    JSON.stringify({
-      gantt: fcfsResult,
-      metrics: fcfsResult,
-      ...getAverages(fcfsResult),
-      lifecycle: fcfsTracker.getSummary(),
-    })
-  );
-
+  this.FCFS();
+  
   // ==========================================
   // 2. SHORTEST JOB FIRST (SJF - Non-Preemptive)
   // ==========================================
-  const sjfTracker = createLifecycleTracker(processQueue);
-  let remainingSJF = [...processQueue];
-  const sjfResult = [];
-  let sjfTime = 0;
-  while (remainingSJF.length > 0) {
-    const available = remainingSJF.filter((p) => p.arrival <= sjfTime);
-    if (available.length === 0) {
-      sjfTime = Math.min(...remainingSJF.map((p) => p.arrival));
-      continue;
-    }
-    available.sort((a, b) => a.burst - b.burst || a.arrival - b.arrival);
-    const p = available[0];
-    const startTime = sjfTime;
-    const CT = startTime + p.burst;
-    const TAT = CT - p.arrival;
-    const WT = TAT - p.burst;
-
-    sjfTracker.transition(p.pid, STATES.RUNNING, startTime, `Dispatched to CPU (SJF burst=${p.burst})`);
-    sjfTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
-
-    sjfTime = CT;
-    sjfResult.push({ pid: p.pid, startTime, CT, burst: p.burst, TAT, WT });
-    remainingSJF = remainingSJF.filter((item) => item.pid !== p.pid);
-  }
-  localStorage.setItem(
-    'SJF',
-    JSON.stringify({
-      gantt: sjfResult,
-      metrics: sjfResult,
-      ...getAverages(sjfResult),
-      lifecycle: sjfTracker.getSummary(),
-    })
-  );
-
+  this.SJF();
   // ==========================================
   // 3. PRIORITY SCHEDULING (Non-Preemptive)
   // ==========================================
-  const prioTracker = createLifecycleTracker(processQueue);
-  let remainingPriority = [...processQueue];
-  const priorityResult = [];
-  let prioTime = 0;
-  while (remainingPriority.length > 0) {
-    const available = remainingPriority.filter((p) => p.arrival <= prioTime);
-    if (available.length === 0) {
-      prioTime = Math.min(...remainingPriority.map((p) => p.arrival));
-      continue;
-    }
-    // Lower number = higher priority (e.g., 1 runs before 2)
-    available.sort((a, b) => a.priority - b.priority || a.arrival - b.arrival);
-    const p = available[0];
-    const startTime = prioTime;
-    const CT = startTime + p.burst;
-    const TAT = CT - p.arrival;
-    const WT = TAT - p.burst;
-
-    prioTracker.transition(p.pid, STATES.RUNNING, startTime, `Dispatched to CPU (Priority=${p.priority})`);
-    prioTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
-
-    prioTime = CT;
-    priorityResult.push({ pid: p.pid, priority: p.priority, startTime, CT, burst: p.burst, TAT, WT });
-    remainingPriority = remainingPriority.filter((item) => item.pid !== p.pid);
-  }
-  localStorage.setItem(
-    'Priority',
-    JSON.stringify({
-      gantt: priorityResult,
-      metrics: priorityResult,
-      ...getAverages(priorityResult),
-      lifecycle: prioTracker.getSummary(),
-    })
-  );
-
+  this.highestPriority();
   // ==========================================
   // 4. ROUND ROBIN (RR)
   // ==========================================
-  
-  const quantum = Number(localStorage.getItem('quantumTime')) || 2;
-  const rrTracker = createLifecycleTracker(processQueue);
-  const rrQueue = [...processQueue]
-    .sort((a, b) => a.arrival - b.arrival)
-    .map((p) => ({ ...p, remainingBurst: p.burst }));
-  const readyQueue = [];
-  const rrGantt = [];
-  const rrMetrics = [];
-  let rrTime = 0;
-  let idx = 0;
-
-  while (idx < rrQueue.length && rrQueue[idx].arrival <= rrTime) {
-    readyQueue.push(rrQueue[idx++]);
+  this.roundRobin();
   }
-
-  while (readyQueue.length > 0 || idx < rrQueue.length) {
-    if (readyQueue.length === 0) {
-      rrTime = rrQueue[idx].arrival;
-      while (idx < rrQueue.length && rrQueue[idx].arrival <= rrTime) {
-        readyQueue.push(rrQueue[idx++]);
-      }
-    }
-
-    const current = readyQueue.shift();
-    const execTime = Math.min(current.remainingBurst, quantum);
-    const startTime = rrTime;
-
-    rrTracker.transition(current.pid, STATES.RUNNING, startTime, `Dispatched to CPU (RR q=${quantum})`);
-
-    rrTime += execTime;
-    current.remainingBurst -= execTime;
-    rrGantt.push({ pid: current.pid, startTime, CT: rrTime });
-
-    while (idx < rrQueue.length && rrQueue[idx].arrival <= rrTime) {
-      readyQueue.push(rrQueue[idx++]);
-    }
-
-    if (current.remainingBurst > 0) {
-      // Preempted after quantum: moves through Waiting/context-switch back to Ready
-      rrTracker.transition(current.pid, STATES.WAITING, rrTime, 'Time quantum expired (context switch)');
-      rrTracker.transition(current.pid, STATES.READY, rrTime, 'Re-queued in Ready queue');
-      readyQueue.push(current);
-    } else {
-      const CT = rrTime;
-      const TAT = CT - current.arrival;
-      const WT = TAT - current.burst;
-      rrTracker.transition(current.pid, STATES.TERMINATED, CT, 'Burst completed');
-      rrMetrics.push({ pid: current.pid, CT, burst: current.burst, TAT, WT });
-    }
-  }
-
-  // Sort RR metrics back by PID order for clean table display
-  rrMetrics.sort((a, b) => String(a.pid).localeCompare(String(b.pid), undefined, { numeric: true }));
-  localStorage.setItem(
-    'RoundRobin',
-    JSON.stringify({
-      gantt: rrGantt,
-      metrics: rrMetrics,
-      ...getAverages(rrMetrics),
-      lifecycle: rrTracker.getSummary(),
-    })
-  );
-}
 
 }

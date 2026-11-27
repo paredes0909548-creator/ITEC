@@ -2,6 +2,11 @@ import systemCall from "../KernelMode/SystemCall/systemCall.js";
 import cartCore from "./cartCore.js";
 
 systemCall.storeTime();
+const profBtn = document.getElementById('profBtn');
+profBtn.addEventListener('click', (e)=>{
+e.preventDefault();
+window.location.replace('../UserInfo/userAccount.html');
+});
 
 const modeToggleButton = document.getElementById('modeToggleButton');
 modeToggleButton.addEventListener('click', (e) => {
