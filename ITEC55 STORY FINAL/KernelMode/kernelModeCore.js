@@ -129,7 +129,7 @@ export default class kernelModeCore {
     );
 
     this.saveSnapshot(`Process PID ${PID} Created`);
-    this.ganchartSimulator();
+    this.ganttChartSimulator();
     return pcb;
   }
 
@@ -164,10 +164,12 @@ export default class kernelModeCore {
 static roundRobin(createLifecycleTracker,processQueue,STATES,getAverages){
   
 const quantum = Number(localStorage.getItem('quantumTime')) || 2;
+
   const rrTracker = createLifecycleTracker(processQueue);
   const rrQueue = [...processQueue]
     .sort((a, b) => a.arrival - b.arrival)
     .map((p) => ({ ...p, remainingBurst: p.burst }));
+
   const readyQueue = [];
   const rrGantt = [];
   const rrMetrics = [];
@@ -176,7 +178,7 @@ const quantum = Number(localStorage.getItem('quantumTime')) || 2;
 
   while (idx < rrQueue.length && rrQueue[idx].arrival <= rrTime) {
     readyQueue.push(rrQueue[idx++]);
-  }
+  }/* this block handles the arrival time to the ready queue */
 
   while (readyQueue.length > 0 || idx < rrQueue.length) {
     if (readyQueue.length === 0) {
@@ -196,11 +198,10 @@ const quantum = Number(localStorage.getItem('quantumTime')) || 2;
     current.remainingBurst -= execTime;
     rrGantt.push({ 
       pid: current.pid, 
+      arrival:current.arrival,
       startTime, 
       CT: rrTime, 
-      burst: current.burst, 
-      TAT, 
-      WT});
+      burst: current.burst});
 
     while (idx < rrQueue.length && rrQueue[idx].arrival <= rrTime) {
       readyQueue.push(rrQueue[idx++]);
@@ -264,7 +265,13 @@ const prioTracker = createLifecycleTracker(processQueue);
     prioTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
 
     prioTime = CT;
-    priorityResult.push({ pid: p.pid, priority: p.priority, startTime, CT, burst: p.burst, TAT, WT });
+    priorityResult.push({pid: p.pid, 
+                         arrival:p.arrival,
+                         priority: p.priority, 
+                         startTime, 
+                         CT, burst: p.burst, 
+                         TAT, 
+                         WT});
     remainingPriority = remainingPriority.filter((item) => item.pid !== p.pid);
   }
   localStorage.setItem(
@@ -285,13 +292,16 @@ const sjfTracker = createLifecycleTracker(processQueue);
   const sjfResult = [];
   let sjfTime = 0;
   while (remainingSJF.length > 0) {
-    const available = remainingSJF.filter((p) => p.arrival <= sjfTime);
-    if (available.length === 0) {
+
+    const readyQueue = remainingSJF.filter((p) => p.arrival <= sjfTime);
+
+    if (readyQueue.length === 0) {
       sjfTime = Math.min(...remainingSJF.map((p) => p.arrival));
       continue;
     }
-    available.sort((a, b) => a.burst - b.burst || a.arrival - b.arrival);
-    const p = available[0];
+
+    readyQueue.sort((a, b) => a.burst - b.burst || a.arrival - b.arrival);
+    const p = readyQueue[0];
     const startTime = sjfTime;
     const CT = startTime + p.burst;
     const TAT = CT - p.arrival;
@@ -301,7 +311,13 @@ const sjfTracker = createLifecycleTracker(processQueue);
     sjfTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
 
     sjfTime = CT;
-    sjfResult.push({ pid: p.pid, startTime, CT, burst: p.burst, TAT, WT });
+    sjfResult.push({pid: p.pid, 
+                    arrival:p.arrival,
+                    startTime, 
+                    CT, 
+                    burst: p.burst, 
+                    TAT, 
+                    WT});
     remainingSJF = remainingSJF.filter((item) => item.pid !== p.pid);
   }
   localStorage.setItem(
@@ -330,7 +346,13 @@ const fcfsTracker = createLifecycleTracker(processQueue);
     fcfsTracker.transition(p.pid, STATES.TERMINATED, CT, 'Burst completed');
 
     fcfsTime = CT;
-    return { pid: p.pid, startTime, CT, burst: p.burst, TAT, WT };
+    return {pid: p.pid,
+            arrival:p.arrival,
+            startTime, 
+            CT, 
+            burst: p.burst, 
+            TAT, 
+            WT};
   });
   localStorage.setItem(
     'FCFS',
@@ -346,7 +368,7 @@ const fcfsTracker = createLifecycleTracker(processQueue);
 
 
 
-static ganchartSimulator() {
+static ganttChartSimulator() {
   const processQueue = JSON.parse(localStorage.getItem('ProcessQueue')) || [];
   if (processQueue.length === 0) return;
 
